@@ -1,0 +1,8 @@
+apply plugin: 'java'
+
+dependencies {
+    // for android support annotations
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile 'com.squareup:otto:1.3.5'
+}

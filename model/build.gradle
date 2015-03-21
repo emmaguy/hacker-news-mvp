@@ -1,0 +1,13 @@
+apply plugin: 'java'
+
+dependencies {
+    compile project(':common')
+
+    compile 'com.netflix.rxjava:rxjava-core:0.20.+'
+    compile 'com.netflix.rxjava:rxjava-android:0.20.+'
+
+    compile 'com.squareup.retrofit:retrofit:1.9.+'
+
+    testCompile 'junit:junit:4.+'
+    testCompile 'org.mockito:mockito-core:1.+'
+}

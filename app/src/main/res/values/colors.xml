@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="hacker_news_orange">#FF6F00</color>
+    <color name="hacker_news_orange_darker">#E65100</color>
+    <color name="list_item_story_background">#37474F</color>
+</resources>
