@@ -1,5 +1,6 @@
 package com.emmaguy.hn.newsitemslist;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -71,6 +72,7 @@ public class NewsItemsAdapter extends RecyclerView.Adapter<NewsItemsAdapter.Stor
             setElevation();
         }
 
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         private void setElevation() {
             int elevation = mContext.getResources().getDimensionPixelSize(R.dimen.list_item_story_elevation);
 
