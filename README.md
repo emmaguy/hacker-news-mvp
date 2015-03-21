@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/emmaguy/hacker-news-mvp.svg)](https://travis-ci.org/emmaguy/hacker-news-mvp)
-[![Coverage Status](https://coveralls.io/repos/emmaguy/hacker-news-mvp/badge.svg)](https://coveralls.io/r/emmaguy/hacker-news-mvp)
 
 # Hacker News app
 
