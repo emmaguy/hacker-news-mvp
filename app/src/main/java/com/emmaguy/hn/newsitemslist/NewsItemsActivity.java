@@ -2,6 +2,7 @@ package com.emmaguy.hn.newsitemslist;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.emmaguy.hn.R;
 import com.emmaguy.hn.common.DividerItemDecoration;
@@ -24,10 +26,11 @@ import butterknife.InjectView;
 
 public class NewsItemsActivity extends ActionBarActivity implements NewsItemsView {
     @InjectView(R.id.news_items_toolbar) Toolbar mToolbar;
-    @InjectView(R.id.news_items_progress_bar_loading) ProgressBar mProgressBar;
+    @InjectView(R.id.news_items_textview_error) TextView mErrorTextView;
     @InjectView(R.id.news_items_recyclerview_list) RecyclerView mNewsItemsList;
+    @InjectView(R.id.news_items_progress_bar_loading) ProgressBar mProgressBar;
 
-    private NewsItemsPresenter mPresenter;
+    private NewsItemsPresenterImpl mPresenter;
     private NewsItemsAdapter mAdapter;
 
     @Override
@@ -44,14 +47,15 @@ public class NewsItemsActivity extends ActionBarActivity implements NewsItemsVie
         mAdapter = new NewsItemsAdapter(this);
         mNewsItemsList.setAdapter(mAdapter);
 
-        mPresenter = new NewsItemsPresenter(this, HackerNewsDataSource.getInstance(), EventBusProvider.getUiBusInstance());
+        mPresenter = new NewsItemsPresenterImpl(this,
+                HackerNewsDataSource.getInstance(),
+                EventBusProvider.getNetworkBusInstance());
     }
 
     private void initialiseList() {
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mNewsItemsList.setLayoutManager(layoutManager);
-        mNewsItemsList.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.news_items_list_divider), true, true));
         mNewsItemsList.setItemAnimator(new DefaultItemAnimator());
+        mNewsItemsList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mNewsItemsList.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.news_items_list_divider), true, true));
     }
 
     @Override
@@ -69,8 +73,19 @@ public class NewsItemsActivity extends ActionBarActivity implements NewsItemsVie
     }
 
     @Override
-    public void showNewsItems(List<NewsItem> items) {
+    public void showNewsItems(@NonNull List<NewsItem> items) {
         mAdapter.setNewsItems(items);
+        mNewsItemsList.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showError() {
+        mErrorTextView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideError() {
+        mErrorTextView.setVisibility(View.GONE);
     }
 
     @Override
@@ -84,7 +99,7 @@ public class NewsItemsActivity extends ActionBarActivity implements NewsItemsVie
     }
 
     @Override
-    public boolean listIsEmpty() {
+    public boolean isEmptyList() {
         return mAdapter.getItemCount() <= 0;
     }
 

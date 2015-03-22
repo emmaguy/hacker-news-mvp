@@ -9,7 +9,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:progressDrawable="@drawable/news_item_progress_bar"
+        android:progressDrawable="@drawable/news_item_detail_progress_bar"
         tools:progress="50" />
 
     <WebView

@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-    compile project(':domain')
+    compile project(':model')
 
     compile 'com.android.support:appcompat-v7:22.0.+'
     compile 'com.android.support:recyclerview-v7:21.0.+'

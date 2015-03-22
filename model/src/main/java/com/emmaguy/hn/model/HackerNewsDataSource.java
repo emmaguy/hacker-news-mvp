@@ -17,10 +17,8 @@ import rx.schedulers.Schedulers;
 public class HackerNewsDataSource {
     private static final int MAX_NUMBER_STORIES = 35;
     private static final String ENDPOINT_URL_HACKER_NEWS_API = "https://hacker-news.firebaseio.com";
-
-    private final HackerNewsService mHackerNewsService;
-
     private static HackerNewsDataSource sDataSourceInstance = null;
+    private final HackerNewsService mHackerNewsService;
 
     private HackerNewsDataSource() {
         RestAdapter restAdapter = new RestAdapter.Builder()
@@ -36,26 +34,6 @@ public class HackerNewsDataSource {
         }
 
         return sDataSourceInstance;
-    }
-
-    public void getLatestNewsItems() {
-        createLatestStoryListObservable()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new OnNextListener(EventBusProvider.getNetworkBusInstance()),
-                            new OnErrorListener(EventBusProvider.getNetworkBusInstance()));
-    }
-
-    private Observable<List<NewsItem>> createLatestStoryListObservable() {
-        return mHackerNewsService.topStories()
-                .lift(this.<String>flattenList())
-                .limit(MAX_NUMBER_STORIES)
-                .flatMap(new Func1<String, Observable<NewsItem>>() {
-                    @Override
-                    public Observable<NewsItem> call(String storyId) {
-                        return mHackerNewsService.item(storyId);
-                    }
-                }).toList();
     }
 
     private static <T> Observable.Operator<T, List<T>> flattenList() {
@@ -82,5 +60,25 @@ public class HackerNewsDataSource {
                 };
             }
         };
+    }
+
+    public void getLatestNewsItems() {
+        createLatestStoryListObservable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new OnNextListener(EventBusProvider.getNetworkBusInstance()),
+                        new OnErrorListener(EventBusProvider.getNetworkBusInstance()));
+    }
+
+    private Observable<List<NewsItem>> createLatestStoryListObservable() {
+        return mHackerNewsService.topStories()
+                .lift(this.<String>flattenList())
+                .limit(MAX_NUMBER_STORIES)
+                .flatMap(new Func1<String, Observable<NewsItem>>() {
+                    @Override
+                    public Observable<NewsItem> call(String storyId) {
+                        return mHackerNewsService.item(storyId);
+                    }
+                }).toList();
     }
 }

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Hacker News</string>
+
+    <string name="news_items_failed_to_get_latest">Failed to get latest news</string>
 </resources>

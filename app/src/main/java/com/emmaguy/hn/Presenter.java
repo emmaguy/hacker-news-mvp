@@ -5,6 +5,5 @@ package com.emmaguy.hn;
  */
 public interface Presenter {
     void onStart();
-
     void onStop();
 }

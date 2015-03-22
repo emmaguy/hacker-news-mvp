@@ -30,4 +30,12 @@
         android:indeterminateTint="@color/hacker_news_orange"
         android:indeterminateTintMode="src_in" />
 
+    <TextView
+        android:id="@+id/news_items_textview_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/news_items_failed_to_get_latest"
+        android:visibility="gone" />
+
 </RelativeLayout>
