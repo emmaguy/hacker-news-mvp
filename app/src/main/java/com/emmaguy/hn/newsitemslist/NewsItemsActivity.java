@@ -17,6 +17,7 @@ import com.emmaguy.hn.common.DividerItemDecoration;
 import com.emmaguy.hn.common.EventBusProvider;
 import com.emmaguy.hn.model.HackerNewsDataSource;
 import com.emmaguy.hn.model.NewsItem;
+import com.emmaguy.hn.model.WebDataSource;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class NewsItemsActivity extends ActionBarActivity implements NewsItemsVie
 
     private NewsItemsPresenterImpl mPresenter;
     private NewsItemsAdapter mAdapter;
+    private HackerNewsDataSource mDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +49,9 @@ public class NewsItemsActivity extends ActionBarActivity implements NewsItemsVie
         mAdapter = new NewsItemsAdapter(this);
         mNewsItemsList.setAdapter(mAdapter);
 
+        mDataSource = WebDataSource.getInstance();
         mPresenter = new NewsItemsPresenterImpl(this,
-                HackerNewsDataSource.getInstance(),
+                mDataSource,
                 EventBusProvider.getNetworkBusInstance());
     }
 

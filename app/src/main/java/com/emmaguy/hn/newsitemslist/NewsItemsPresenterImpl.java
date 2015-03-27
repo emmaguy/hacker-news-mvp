@@ -2,9 +2,9 @@ package com.emmaguy.hn.newsitemslist;
 
 import android.support.annotation.NonNull;
 
-import com.emmaguy.hn.model.NewsItemsRequestFailedEvent;
 import com.emmaguy.hn.model.HackerNewsDataSource;
 import com.emmaguy.hn.model.NewsItem;
+import com.emmaguy.hn.model.NewsItemsRequestFailedEvent;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 

@@ -12,6 +12,15 @@ public class NewsItem {
     @SerializedName("url")
     private String mUrl;
 
+    public NewsItem() {
+    }
+
+    public NewsItem(String title, String url) {
+        super();
+        mTitle = title;
+        mUrl = url;
+    }
+
     public String getTitle() {
         return mTitle;
     }
