@@ -33,9 +33,9 @@ public class NewsItemsActivity extends ActionBarActivity implements NewsItemsVie
     @InjectView(R.id.news_items_recyclerview_list) RecyclerView mNewsItemsList;
     @InjectView(R.id.news_items_progress_bar_loading) ProgressBar mProgressBar;
 
+    private NewsDataSource mDataSource;
     private NewsItemsAdapter mAdapter;
     private NewsItemsPresenter mPresenter;
-    private NewsDataSource mDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

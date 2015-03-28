@@ -2,6 +2,7 @@ package com.emmaguy.hn.comments;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -10,8 +11,8 @@ import android.widget.ScrollView;
 import com.emmaguy.hn.R;
 import com.emmaguy.hn.common.EventBusProvider;
 import com.emmaguy.hn.model.Comment;
-import com.emmaguy.hn.model.data.datasource.NewsDataSource;
 import com.emmaguy.hn.model.data.datasource.HackerNewsDataSource;
+import com.emmaguy.hn.model.data.datasource.NewsDataSource;
 import com.emmaguy.hn.presenter.comments.CommentsPresenter;
 import com.emmaguy.hn.presenter.comments.CommentsPresenterImpl;
 import com.emmaguy.hn.view.CommentsView;
@@ -27,10 +28,12 @@ import butterknife.InjectView;
 
 public class CommentsActivity extends ActionBarActivity implements CommentsView {
     public static final String EXTRA_NEWS_ITEM_ID = "key_news_item_id";
+    public static final String EXTRA_NEWS_ITEM_TITLE = "key_news_item_title";
     public static final String EXTRA_NEWS_ITEM_COMMENT_KEYS_ID = "key_news_item_comment_ids";
 
-    @InjectView(R.id.activity_news_item_comments_root) ViewGroup mRootViewGroup;
+    @InjectView(R.id.comments_toolbar) Toolbar mToolbar;
     @InjectView(R.id.comments_progress_bar_loading) ProgressBar mLoadingIndicator;
+    @InjectView(R.id.activity_news_item_comments_root) ViewGroup mRootViewGroup;
 
     private String mNewsItemId;
     private CommentsPresenter mPresenter;
@@ -41,8 +44,12 @@ public class CommentsActivity extends ActionBarActivity implements CommentsView 
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_comments);
-
         ButterKnife.inject(this);
+
+        setSupportActionBar(mToolbar);
+
+        String title = getIntent().getStringExtra(EXTRA_NEWS_ITEM_TITLE);
+        setTitle(title);
 
         mNewsItemId = getIntent().getStringExtra(EXTRA_NEWS_ITEM_ID);
         ArrayList<String> ids = getIntent().getStringArrayListExtra(EXTRA_NEWS_ITEM_COMMENT_KEYS_ID);
@@ -88,6 +95,7 @@ public class CommentsActivity extends ActionBarActivity implements CommentsView 
         for (int i = 0; i < comments.size(); i++) {
             Comment c = comments.get(i);
 
+            // add all the top level comments to the root node
             if (mNewsItemId.equals(c.getParent())) {
                 addNode(root, toRemoveComments, addedNodes, c);
             }
@@ -100,6 +108,7 @@ public class CommentsActivity extends ActionBarActivity implements CommentsView 
 
             for (Comment c : comments) {
                 if (addedNodes.containsKey(c.getParent())) {
+                    // add a reply to its parent comment, then remove it from the list of comments
                     addNode(addedNodes.get(c.getParent()), toRemoveComments, addedNodes, c);
                 }
             }

@@ -2,5 +2,7 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="row_news_item_elevation">4dp</dimen>
+
+    <dimen name="news_items_divider">2dp</dimen>
+    <dimen name="news_item_padding">10dp</dimen>
 </resources>

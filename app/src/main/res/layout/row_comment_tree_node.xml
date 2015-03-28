@@ -15,7 +15,8 @@
         android:paddingRight="15dp"
         android:layout_centerVertical="true"
         android:gravity="center_vertical"
-        android:background="@color/list_item_story_background"
+        android:textColor="@color/text_main"
+        android:background="@color/background_main"
         tools:text="blah blah" />
 
 </RelativeLayout>

@@ -5,10 +5,10 @@
             <shape>
                 <corners android:radius="5dip" />
 
-                <solid android:color="@color/hacker_news_orange" />
+                <solid android:color="@color/main" />
             </shape>
         </clip>
 
-        <color android:color="@color/hacker_news_orange" />
+        <color android:color="@color/main" />
     </item>
 </layer-list>

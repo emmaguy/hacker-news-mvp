@@ -1,8 +1,8 @@
 <resources>
 
     <style name="AppTheme" parent="Theme.AppCompat">
-        <item name="colorPrimary">@color/hacker_news_orange</item>
-        <item name="colorPrimaryDark">@color/hacker_news_orange_darker</item>
+        <item name="colorPrimary">@color/main</item>
+        <item name="colorPrimaryDark">@color/main_secondary</item>
 
         <item name="android:windowActionBar">false</item>
         <item name="windowActionBar">false</item>

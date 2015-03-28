@@ -29,6 +29,8 @@ dependencies {
     // treeview for comments
     compile 'com.github.bmelnychuk:atv:1.2.+'
 
+    compile 'com.balysv:material-ripple:1.0.1'
+
     testCompile 'junit:junit:4.+'
     testCompile 'org.mockito:mockito-core:1.+'
 }
