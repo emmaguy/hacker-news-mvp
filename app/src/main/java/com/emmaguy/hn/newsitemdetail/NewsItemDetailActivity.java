@@ -14,7 +14,7 @@ import butterknife.InjectView;
 
 
 public class NewsItemDetailActivity extends ActionBarActivity {
-    public static final String EXTRA_NEWS_ITEM_KEY_URL = "key_story_url";
+    public static final String EXTRA_NEWS_ITEM_KEY_URL = "key_news_item_url";
 
     @InjectView(R.id.news_item_web_view_content) WebView mWebView;
     @InjectView(R.id.news_item_progress_bar_loading) ProgressBar mProgressBar;

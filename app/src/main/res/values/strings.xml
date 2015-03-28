@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Hacker News</string>
 
-    <string name="news_items_failed_to_get_latest">Failed to get latest news</string>
+    <string name="failed_to_get_latest_news">Failed to get latest news</string>
+
+    <plurals name="points">
+        <item quantity="one">%1$d point</item>
+        <item quantity="other">%1$d points</item>
+    </plurals>
+
 </resources>

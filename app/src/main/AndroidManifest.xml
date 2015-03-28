@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".newsitemslist.NewsItemsActivity"
+            android:name=".newsitems.NewsItemsActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -21,8 +21,10 @@
         </activity>
         <activity
             android:name=".newsitemdetail.NewsItemDetailActivity"
-            android:parentActivityName=".newsitemslist.NewsItemsActivity">
-        </activity>
+            android:parentActivityName=".newsitems.NewsItemsActivity" />
+        <activity
+            android:name=".comments.CommentsActivity"
+            android:parentActivityName=".newsitems.NewsItemsActivity" />
     </application>
 
 </manifest>

@@ -8,4 +8,8 @@
         <item name="windowActionBar">false</item>
     </style>
 
+    <style name="TreeNodeStyleDivided">
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+    </style>
+
 </resources>

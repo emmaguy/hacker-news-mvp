@@ -41,3 +41,6 @@ install:
 
 script:
   ./gradlew test
+
+after_success:
+  ./gradlew connectedCheck coveralls
