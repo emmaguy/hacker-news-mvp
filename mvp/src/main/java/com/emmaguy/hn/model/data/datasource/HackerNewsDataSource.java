@@ -21,12 +21,14 @@ import rx.schedulers.Schedulers;
 
 /**
  * A @{link NewsDataSource} which retrieves stories from the Hacker News API
- *
+ * <p/>
  * Created by emma on 21/03/15.
  */
 public class HackerNewsDataSource implements NewsDataSource {
     private static final int MAX_NUMBER_STORIES = 25;
     private static final String ENDPOINT_URL_HACKER_NEWS_API = "https://hacker-news.firebaseio.com";
+    private static final String HACKER_NEWS_NEWS_ITEM_URL = "https://news.ycombinator.com/item?id=";
+
     private static NewsDataSource sDataSourceInstance = null;
     private final HackerNewsApiService mHackerNewsApiService;
 
@@ -69,7 +71,24 @@ public class HackerNewsDataSource implements NewsDataSource {
                     public Observable<NewsItem> call(String id) {
                         return mHackerNewsApiService.item(id);
                     }
-                }).toList();
+                })
+                .doOnEach(new Subscriber<NewsItem>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(NewsItem newsItem) {
+                        newsItem.setPermalink(HACKER_NEWS_NEWS_ITEM_URL);
+                    }
+                })
+                .toList();
     }
 
     @Override

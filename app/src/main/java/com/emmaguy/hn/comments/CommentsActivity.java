@@ -1,8 +1,12 @@
 package com.emmaguy.hn.comments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -29,15 +33,17 @@ import butterknife.InjectView;
 public class CommentsActivity extends ActionBarActivity implements CommentsView {
     public static final String EXTRA_NEWS_ITEM_ID = "key_news_item_id";
     public static final String EXTRA_NEWS_ITEM_TITLE = "key_news_item_title";
+    public static final String EXTRA_NEWS_ITEM_PERMALINK = "key_news_item_permalink";
     public static final String EXTRA_NEWS_ITEM_COMMENT_KEYS_ID = "key_news_item_comment_ids";
 
     @InjectView(R.id.comments_toolbar) Toolbar mToolbar;
     @InjectView(R.id.comments_progress_bar_loading) ProgressBar mLoadingIndicator;
     @InjectView(R.id.activity_news_item_comments_root) ViewGroup mRootViewGroup;
 
+    private String mPermalink;
     private String mNewsItemId;
-    private CommentsPresenter mPresenter;
     private NewsDataSource mDataSource;
+    private CommentsPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,7 @@ public class CommentsActivity extends ActionBarActivity implements CommentsView 
         String title = getIntent().getStringExtra(EXTRA_NEWS_ITEM_TITLE);
         setTitle(title);
 
+        mPermalink = getIntent().getStringExtra(EXTRA_NEWS_ITEM_PERMALINK);
         mNewsItemId = getIntent().getStringExtra(EXTRA_NEWS_ITEM_ID);
         ArrayList<String> ids = getIntent().getStringArrayListExtra(EXTRA_NEWS_ITEM_COMMENT_KEYS_ID);
 
@@ -59,6 +66,26 @@ public class CommentsActivity extends ActionBarActivity implements CommentsView 
                 ids,
                 mDataSource,
                 EventBusProvider.getNetworkBusInstance());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.comments_permalink, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.share_permalink:
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_TEXT, mPermalink);
+                startActivity(Intent.createChooser(i, null));
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

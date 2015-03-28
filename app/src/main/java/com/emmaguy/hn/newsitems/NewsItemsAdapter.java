@@ -87,6 +87,7 @@ public class NewsItemsAdapter extends RecyclerView.Adapter<NewsItemsAdapter.News
             Intent intent = new Intent(mContext, CommentsActivity.class);
             intent.putExtra(CommentsActivity.EXTRA_NEWS_ITEM_ID, newsItem.getId());
             intent.putExtra(CommentsActivity.EXTRA_NEWS_ITEM_TITLE, newsItem.getTitle());
+            intent.putExtra(CommentsActivity.EXTRA_NEWS_ITEM_PERMALINK, newsItem.getPermalink());
             intent.putExtra(CommentsActivity.EXTRA_NEWS_ITEM_COMMENT_KEYS_ID, newsItem.getRootCommentIds());
             mContext.startActivity(intent);
         }

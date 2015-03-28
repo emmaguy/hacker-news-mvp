@@ -2,6 +2,7 @@
     <string name="app_name">Hacker News</string>
 
     <string name="failed_to_get_latest_news">Failed to get latest news</string>
+    <string name="share">share</string>
 
     <plurals name="points">
         <item quantity="one">%1$d point</item>

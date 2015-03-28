@@ -23,10 +23,14 @@ public class NewsItem {
     @SerializedName("score")
     private int mScore = 0;
 
-    public NewsItem() {}
+    private String mPermalink;
+
+    public NewsItem() {
+    }
 
     public NewsItem(String title, String url) {
         super();
+        
         mTitle = title;
         mUrl = url;
     }
@@ -57,5 +61,17 @@ public class NewsItem {
 
     public void setScore(int score) {
         mScore = score;
+    }
+
+    public void setPermalink(String url) {
+        mPermalink = url + getId();
+    }
+
+    public String getPermalink() {
+        return mPermalink;
+    }
+
+    public void setId(String id) {
+        mId = id;
     }
 }

@@ -37,4 +37,13 @@ public class NewsItemTest {
                 "  \"url\" : \"http://www.github.com/emmaguy\"\n" +
                 "}";
     }
+
+    @Test
+    public void test_settingPermalink_appendsId() {
+        NewsItem item = new NewsItem();
+        item.setId("123");
+        item.setPermalink("http://www.emmaisawesome.com/item?id=");
+
+        assertThat(item.getPermalink(), equalTo("http://www.emmaisawesome.com/item?id=123"));
+    }
 }
