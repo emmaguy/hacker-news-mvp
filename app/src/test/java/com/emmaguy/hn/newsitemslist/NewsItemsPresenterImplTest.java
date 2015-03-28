@@ -1,7 +1,7 @@
 package com.emmaguy.hn.newsitemslist;
 
 import com.emmaguy.hn.model.NewsItemsRequestFailedEvent;
-import com.emmaguy.hn.model.HackerNewsDataSource;
+import com.emmaguy.hn.model.WebDataSource;
 import com.emmaguy.hn.model.NewsItem;
 import com.squareup.otto.Bus;
 
@@ -28,7 +28,7 @@ public class NewsItemsPresenterImplTest {
     private NewsItemsView mMockView;
 
     @Mock
-    private HackerNewsDataSource mMockDataSource;
+    private WebDataSource mMockDataSource;
 
     private NewsItemsPresenterImpl mPresenter;
 
