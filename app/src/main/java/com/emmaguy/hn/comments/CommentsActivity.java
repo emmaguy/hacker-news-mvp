@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.emmaguy.hn.R;
+import com.emmaguy.hn.Utils;
 import com.emmaguy.hn.common.EventBusProvider;
 import com.emmaguy.hn.model.Comment;
 import com.emmaguy.hn.model.data.datasource.HackerNewsDataSource;
@@ -71,18 +73,16 @@ public class CommentsActivity extends ActionBarActivity implements CommentsView 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.comments_permalink, menu);
+        inflater.inflate(R.menu.menu_share, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.share_permalink:
-                Intent i = new Intent(Intent.ACTION_SEND);
-                i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_TEXT, mPermalink);
-                startActivity(Intent.createChooser(i, null));
+            case R.id.share:
+                Toast.makeText(this, mPermalink, Toast.LENGTH_SHORT).show();
+                startActivity(Utils.getShareIntent(mPermalink));
                 return true;
         }
         return super.onOptionsItemSelected(item);

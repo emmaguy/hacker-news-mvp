@@ -4,8 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/news_item_detail_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize" />
+
     <ProgressBar
-        android:id="@+id/news_item_progress_bar_loading"
+        android:id="@+id/news_item_detail_progress_bar_loading"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="3dp"
@@ -13,7 +20,7 @@
         tools:progress="50" />
 
     <WebView
-        android:id="@+id/news_item_web_view_content"
+        android:id="@+id/news_item_detail_web_view_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
