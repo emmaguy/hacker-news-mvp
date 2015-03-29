@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by emma on 21/03/15.
@@ -59,19 +60,40 @@ public class CommentsPresenterImplTest {
     }
 
     @Test
-    public void test_onStart_showsLoadingIndicator() {
+    public void test_onStartWithEmptyView_showsLoadingIndicator() {
+        when(mMockView.isEmpty()).thenReturn(true);
+
         mPresenter.onStart();
 
         verify(mMockView, times(1)).showLoadingIndicator();
-        verifyNoMoreInteractions(mMockView);
     }
 
     @Test
-    public void test_onStart_retrievedComments() {
+    public void test_onStartWithEmptyView_retrievesComments() {
+        when(mMockView.isEmpty()).thenReturn(true);
+
         mPresenter.onStart();
 
         verify(mMockDataSource, times(1)).getComments(mIds);
         verifyNoMoreInteractions(mMockDataSource);
+    }
+
+    @Test
+    public void test_onStartWithoutEmptyView_doesNotShowLoadingIndicator() {
+        when(mMockView.isEmpty()).thenReturn(false);
+
+        mPresenter.onStart();
+
+        verify(mMockView, times(0)).showLoadingIndicator();
+    }
+
+    @Test
+    public void test_onStartWithoutEmptyView_doesNotRetrievesComments() {
+        when(mMockView.isEmpty()).thenReturn(false);
+
+        mPresenter.onStart();
+
+        verify(mMockDataSource, times(0)).getComments(mIds);
     }
 
     @Test

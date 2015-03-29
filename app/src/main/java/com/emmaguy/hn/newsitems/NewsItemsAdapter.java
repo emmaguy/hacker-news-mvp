@@ -4,13 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateUtils;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.emmaguy.hn.R;
+import com.emmaguy.hn.Utils;
 import com.emmaguy.hn.comments.CommentsActivity;
 import com.emmaguy.hn.model.NewsItem;
 import com.emmaguy.hn.newsitemdetail.NewsItemDetailActivity;
@@ -53,15 +54,21 @@ public class NewsItemsAdapter extends RecyclerView.Adapter<NewsItemsAdapter.News
     public void onBindViewHolder(NewsItemHolder holder, int position) {
         NewsItem newsItem = mNewsItems.get(position);
 
+        if (TextUtils.isEmpty(newsItem.getUrl())) {
+            holder.mUrl.setVisibility(View.GONE);
+        } else {
+            holder.mUrl.setVisibility(View.VISIBLE);
+            holder.mUrl.setText(newsItem.getUrl());
+        }
+
         holder.mTitle.setText(newsItem.getTitle());
         String text = mContext.getResources().getQuantityString(R.plurals.news_item_description,
                 newsItem.getScore(),
                 newsItem.getScore(),
                 newsItem.getAuthor(),
-                DateUtils.getRelativeTimeSpanString(newsItem.getTime(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS));
+                Utils.getRelativeTimeSpanString(newsItem.getTime()));
         holder.mDescription.setText(text);
     }
-
 
     @Override
     public int getItemCount() {
@@ -69,6 +76,7 @@ public class NewsItemsAdapter extends RecyclerView.Adapter<NewsItemsAdapter.News
     }
 
     public class NewsItemHolder extends RecyclerView.ViewHolder {
+        @InjectView(R.id.row_news_item_textview_url) TextView mUrl;
         @InjectView(R.id.row_news_item_textview_title) TextView mTitle;
         @InjectView(R.id.row_news_item_textview_description) TextView mDescription;
 
@@ -84,6 +92,7 @@ public class NewsItemsAdapter extends RecyclerView.Adapter<NewsItemsAdapter.News
 
             Intent intent = new Intent(mContext, CommentsActivity.class);
             intent.putExtra(CommentsActivity.EXTRA_NEWS_ITEM_ID, newsItem.getId());
+            intent.putExtra(CommentsActivity.EXTRA_NEWS_ITEM_AUTHOR, newsItem.getAuthor());
             intent.putExtra(CommentsActivity.EXTRA_NEWS_ITEM_TITLE, newsItem.getTitle());
             intent.putExtra(CommentsActivity.EXTRA_NEWS_ITEM_PERMALINK, newsItem.getPermalink());
             intent.putExtra(CommentsActivity.EXTRA_NEWS_ITEM_COMMENT_KEYS_ID, newsItem.getRootCommentIds());
@@ -94,9 +103,14 @@ public class NewsItemsAdapter extends RecyclerView.Adapter<NewsItemsAdapter.News
         public void viewLink() {
             NewsItem newsItem = mNewsItems.get(getPosition());
 
-            Intent intent = new Intent(mContext, NewsItemDetailActivity.class);
-            intent.putExtra(NewsItemDetailActivity.EXTRA_NEWS_ITEM_KEY_URL, newsItem.getUrl());
-            mContext.startActivity(intent);
+            if (TextUtils.isEmpty(newsItem.getUrl())) {
+                viewComments();
+            } else {
+                Intent intent = new Intent(mContext, NewsItemDetailActivity.class);
+                intent.putExtra(NewsItemDetailActivity.EXTRA_NEWS_ITEM_KEY_URL, newsItem.getUrl());
+                intent.putExtra(NewsItemDetailActivity.EXTRA_NEWS_ITEM_KEY_TITLE, newsItem.getTitle());
+                mContext.startActivity(intent);
+            }
         }
     }
 }

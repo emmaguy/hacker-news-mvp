@@ -30,8 +30,10 @@ public class CommentsPresenterImpl implements CommentsPresenter {
     public void onStart() {
         mNetworkBus.register(this);
 
-        mView.showLoadingIndicator();
-        mDataSource.getComments(mIds);
+        if (mView.isEmpty()) {
+            mView.showLoadingIndicator();
+            mDataSource.getComments(mIds);
+        }
     }
 
     @Override

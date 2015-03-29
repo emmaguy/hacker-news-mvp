@@ -49,9 +49,25 @@
                 android:paddingRight="@dimen/news_item_padding"
                 android:textColor="@color/text_main"
                 android:maxLines="1"
+                android:singleLine="true"
                 android:ellipsize="end"
                 android:textSize="15sp"
                 tools:text="awesome story title blah blah" />
+
+            <TextView
+                android:id="@+id/row_news_item_textview_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/news_item_padding"
+                android:autoLink="web"
+                android:textColorLink="@color/selector_news_item_web_link"
+                android:background="@drawable/selector_news_item_background"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="12sp"
+                tools:text="www.emmaisawesome.com" />
 
             <TextView
                 android:id="@+id/row_news_item_textview_description"
@@ -59,7 +75,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_secondary"
                 android:paddingLeft="@dimen/news_item_padding"
-                android:paddingTop="4dp"
                 android:textSize="10sp"
                 tools:text="123 points" />
 

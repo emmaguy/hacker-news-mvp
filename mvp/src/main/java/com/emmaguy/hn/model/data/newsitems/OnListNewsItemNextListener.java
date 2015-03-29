@@ -22,10 +22,6 @@ public class OnListNewsItemNextListener implements Action1<java.util.List<NewsIt
 
     @Override
     public void call(List<NewsItem> newsItems) {
-        // using rxjava's 'toSortedList' causes it to create an unmodifiable list wrapper which we do not want
-        // as then otto won't receive the items. So we have to sort the items manually
-        Collections.sort(newsItems, new NewsItemComparator());
-
         mNetworkBus.post(new Events.NewsItemsSuccessEvent(newsItems));
     }
 }

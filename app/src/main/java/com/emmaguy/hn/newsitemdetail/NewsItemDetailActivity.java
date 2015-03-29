@@ -17,14 +17,18 @@ import com.emmaguy.hn.Utils;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 
 public class NewsItemDetailActivity extends ActionBarActivity {
     public static final String EXTRA_NEWS_ITEM_KEY_URL = "key_news_item_url";
+    public static final String EXTRA_NEWS_ITEM_KEY_TITLE = "key_news_item_title";
 
     @InjectView(R.id.toolbar) Toolbar mToolbar;
     @InjectView(R.id.news_item_detail_web_view_content) WebView mWebView;
     @InjectView(R.id.news_item_detail_progress_bar_loading) ProgressBar mProgressBar;
+
+    private String mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,8 @@ public class NewsItemDetailActivity extends ActionBarActivity {
         ButterKnife.inject(this);
 
         setSupportActionBar(mToolbar);
+        mTitle = getIntent().getStringExtra(EXTRA_NEWS_ITEM_KEY_TITLE);
+        setTitle(mTitle);
 
         String url = getIntent().getStringExtra(EXTRA_NEWS_ITEM_KEY_URL);
 
@@ -58,6 +64,11 @@ public class NewsItemDetailActivity extends ActionBarActivity {
                 return false;
             }
         });
+    }
+
+    @OnClick(R.id.toolbar)
+    void viewFullTitle() {
+        Toast.makeText(this, mTitle, Toast.LENGTH_SHORT).show();
     }
 
     @Override

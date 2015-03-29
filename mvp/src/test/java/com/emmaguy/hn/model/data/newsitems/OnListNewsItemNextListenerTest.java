@@ -44,23 +44,4 @@ public class OnListNewsItemNextListenerTest {
 
         verify(mMockNetworkBus, times(1)).post(any(Events.NewsItemsSuccessEvent.class));
     }
-
-    @Test
-    public void test_postingNewsItems_sortsNewsItems() {
-        NewsItem item1 = new NewsItem();
-        item1.setScore(10);
-
-        NewsItem item2 = new NewsItem();
-        item2.setScore(50);
-
-        NewsItem item3 = new NewsItem();
-        item3.setScore(30);
-
-        List<NewsItem> unsortedNewsItems = Arrays.asList(item1, item2, item3);
-        mNextListener.call(unsortedNewsItems);
-
-        verify(mMockNetworkBus, times(1)).post(any(Events.NewsItemsSuccessEvent.class));
-
-        assertThat(unsortedNewsItems, contains(item2, item3, item1));
-    }
 }

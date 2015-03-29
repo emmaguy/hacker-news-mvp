@@ -20,7 +20,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * A @{link NewsDataSource} which retrieves stories from the Hacker News API
+ * A {@link NewsDataSource} which retrieves the latest, top news items and comments from the Hacker News API
  * <p/>
  * Created by emma on 21/03/15.
  */
@@ -58,15 +58,17 @@ public class HackerNewsDataSource implements NewsDataSource {
     }
 
     /**
-     * Creates an observable which fetches the @{link MAX_NUMBER_STORIES} top new items
+     * Creates an observable which retrieves the ids of the latest top stories and then fetches a list containing
+     * {@link MAX_NUMBER_STORIES} {@link NewsItem}s. Uses concatMap to preserve ordering, so we don't have to sort,
+     * we can just show the news items in the order we're given
      *
-     * @return Observable list of the top @{link NewsItem}s
+     * @return Observable list of the top {@link NewsItem}s
      */
     private Observable<List<NewsItem>> createLatestNewsItemsObservable() {
         return mHackerNewsApiService.topStories()
                 .lift(this.<String>flattenList())
                 .limit(MAX_NUMBER_STORIES)
-                .flatMap(new Func1<String, Observable<NewsItem>>() {
+                .concatMap(new Func1<String, Observable<NewsItem>>() {
                     @Override
                     public Observable<NewsItem> call(String id) {
                         return mHackerNewsApiService.item(id);

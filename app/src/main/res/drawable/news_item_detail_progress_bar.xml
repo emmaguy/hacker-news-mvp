@@ -5,10 +5,10 @@
             <shape>
                 <corners android:radius="5dip" />
 
-                <solid android:color="@color/main" />
+                <solid android:color="@color/main_secondary" />
             </shape>
         </clip>
 
-        <color android:color="@color/main" />
+        <color android:color="@color/main_secondary" />
     </item>
 </layer-list>

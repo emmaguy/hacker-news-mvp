@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="main">#FF6F00</color>
+    <color name="main_alpha">#1FFF6F00</color>
+
     <color name="main_secondary">#E65100</color>
 
     <color name="text_main">#000000</color>
@@ -9,4 +11,5 @@
     <color name="background">#FFFFFF</color>
     <color name="background_main">#EFEFEF</color>
     <color name="background_news_item_contrast">#F6F6F6</color>
+
 </resources>

@@ -35,6 +35,7 @@ import butterknife.OnClick;
 public class CommentsActivity extends ActionBarActivity implements CommentsView {
     public static final String EXTRA_NEWS_ITEM_ID = "key_news_item_id";
     public static final String EXTRA_NEWS_ITEM_TITLE = "key_news_item_title";
+    public static final String EXTRA_NEWS_ITEM_AUTHOR = "key_news_item_author";
     public static final String EXTRA_NEWS_ITEM_PERMALINK = "key_news_item_permalink";
     public static final String EXTRA_NEWS_ITEM_COMMENT_KEYS_ID = "key_news_item_comment_ids";
 
@@ -45,9 +46,12 @@ public class CommentsActivity extends ActionBarActivity implements CommentsView 
     private String mTitle;
     private String mPermalink;
     private String mNewsItemId;
+    private String mNewsItemAuthor;
 
     private NewsDataSource mDataSource;
     private CommentsPresenter mPresenter;
+
+    private boolean mCommentsTreeViewAdded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +65,9 @@ public class CommentsActivity extends ActionBarActivity implements CommentsView 
         mTitle = getIntent().getStringExtra(EXTRA_NEWS_ITEM_TITLE);
         setTitle(mTitle);
 
-        mPermalink = getIntent().getStringExtra(EXTRA_NEWS_ITEM_PERMALINK);
         mNewsItemId = getIntent().getStringExtra(EXTRA_NEWS_ITEM_ID);
+        mNewsItemAuthor = getIntent().getStringExtra(EXTRA_NEWS_ITEM_AUTHOR);
+        mPermalink = getIntent().getStringExtra(EXTRA_NEWS_ITEM_PERMALINK);
         ArrayList<String> ids = getIntent().getStringArrayListExtra(EXTRA_NEWS_ITEM_COMMENT_KEYS_ID);
 
         mDataSource = HackerNewsDataSource.getInstance();
@@ -152,6 +157,11 @@ public class CommentsActivity extends ActionBarActivity implements CommentsView 
         addTreeView(root);
     }
 
+    @Override
+    public boolean isEmpty() {
+        return !mCommentsTreeViewAdded;
+    }
+
     private void addNode(TreeNode root, ArrayList<Comment> toRemoveComments, HashMap<String, TreeNode> addedNodes, Comment c) {
         TreeNode node = new TreeNode(c);
         root.addChild(node);
@@ -161,6 +171,8 @@ public class CommentsActivity extends ActionBarActivity implements CommentsView 
     }
 
     private void addTreeView(TreeNode root) {
+        mCommentsTreeViewAdded = true;
+
         int horizontal = getResources().getDimensionPixelOffset(R.dimen.activity_horizontal_margin);
         int vertical = getResources().getDimensionPixelOffset(R.dimen.activity_vertical_margin);
 
