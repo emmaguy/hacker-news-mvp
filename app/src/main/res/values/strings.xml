@@ -4,9 +4,9 @@
     <string name="failed_to_get_latest_news">Failed to get latest news</string>
     <string name="share">share</string>
 
-    <plurals name="points">
-        <item quantity="one">%1$d point</item>
-        <item quantity="other">%1$d points</item>
+    <plurals name="news_item_description">
+        <item quantity="one">%1$d point by %2$s %3$s</item>
+        <item quantity="other">%1$d points by %2$s %3$s</item>
     </plurals>
 
 </resources>

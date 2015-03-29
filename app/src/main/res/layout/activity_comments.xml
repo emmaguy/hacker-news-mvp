@@ -7,12 +7,7 @@
     android:orientation="vertical"
     tools:context="com.emmaguy.hn.comments.CommentsActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/comments_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize" />
+    <include layout="@layout/toolbar" />
 
     <ProgressBar
         android:id="@+id/comments_progress_bar_loading"

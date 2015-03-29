@@ -2,17 +2,14 @@ package com.emmaguy.hn.newsitems;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.annotation.PluralsRes;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.balysv.materialripple.MaterialRippleLayout;
 import com.emmaguy.hn.R;
 import com.emmaguy.hn.comments.CommentsActivity;
 import com.emmaguy.hn.model.NewsItem;
@@ -57,13 +54,14 @@ public class NewsItemsAdapter extends RecyclerView.Adapter<NewsItemsAdapter.News
         NewsItem newsItem = mNewsItems.get(position);
 
         holder.mTitle.setText(newsItem.getTitle());
-        formatPluralString(holder.mScore, R.plurals.points, newsItem.getScore());
+        String text = mContext.getResources().getQuantityString(R.plurals.news_item_description,
+                newsItem.getScore(),
+                newsItem.getScore(),
+                newsItem.getAuthor(),
+                DateUtils.getRelativeTimeSpanString(newsItem.getTime(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS));
+        holder.mDescription.setText(text);
     }
 
-    private void formatPluralString(TextView textView, @PluralsRes int res, int number) {
-        String text = mContext.getResources().getQuantityString(res, number, number);
-        textView.setText(text);
-    }
 
     @Override
     public int getItemCount() {
@@ -71,8 +69,8 @@ public class NewsItemsAdapter extends RecyclerView.Adapter<NewsItemsAdapter.News
     }
 
     public class NewsItemHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.row_news_item_textview_score) TextView mScore;
         @InjectView(R.id.row_news_item_textview_title) TextView mTitle;
+        @InjectView(R.id.row_news_item_textview_description) TextView mDescription;
 
         public NewsItemHolder(View view) {
             super(view);

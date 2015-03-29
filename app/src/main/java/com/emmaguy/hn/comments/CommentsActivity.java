@@ -1,6 +1,5 @@
 package com.emmaguy.hn.comments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -31,6 +30,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 public class CommentsActivity extends ActionBarActivity implements CommentsView {
     public static final String EXTRA_NEWS_ITEM_ID = "key_news_item_id";
@@ -38,12 +38,14 @@ public class CommentsActivity extends ActionBarActivity implements CommentsView 
     public static final String EXTRA_NEWS_ITEM_PERMALINK = "key_news_item_permalink";
     public static final String EXTRA_NEWS_ITEM_COMMENT_KEYS_ID = "key_news_item_comment_ids";
 
-    @InjectView(R.id.comments_toolbar) Toolbar mToolbar;
+    @InjectView(R.id.toolbar) Toolbar mToolbar;
     @InjectView(R.id.comments_progress_bar_loading) ProgressBar mLoadingIndicator;
     @InjectView(R.id.activity_news_item_comments_root) ViewGroup mRootViewGroup;
 
+    private String mTitle;
     private String mPermalink;
     private String mNewsItemId;
+
     private NewsDataSource mDataSource;
     private CommentsPresenter mPresenter;
 
@@ -56,8 +58,8 @@ public class CommentsActivity extends ActionBarActivity implements CommentsView 
 
         setSupportActionBar(mToolbar);
 
-        String title = getIntent().getStringExtra(EXTRA_NEWS_ITEM_TITLE);
-        setTitle(title);
+        mTitle = getIntent().getStringExtra(EXTRA_NEWS_ITEM_TITLE);
+        setTitle(mTitle);
 
         mPermalink = getIntent().getStringExtra(EXTRA_NEWS_ITEM_PERMALINK);
         mNewsItemId = getIntent().getStringExtra(EXTRA_NEWS_ITEM_ID);
@@ -68,6 +70,11 @@ public class CommentsActivity extends ActionBarActivity implements CommentsView 
                 ids,
                 mDataSource,
                 EventBusProvider.getNetworkBusInstance());
+    }
+
+    @OnClick(R.id.toolbar)
+    void viewFullTitle() {
+        Toast.makeText(this, mTitle, Toast.LENGTH_SHORT).show();
     }
 
     @Override

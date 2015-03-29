@@ -22,6 +22,8 @@ public class NewsItemTest {
         assertThat(item.getTitle(), equalTo("Emma is awesome"));
         assertThat(item.getUrl(), equalTo("http://www.github.com/emmaguy"));
         assertThat(item.getRootCommentIds(), contains("8952", "9224"));
+        assertThat(item.getAuthor(), equalTo("emma"));
+        assertThat(item.getTime(), equalTo(1175714200l));
     }
 
     private String getNewsItemJson() {

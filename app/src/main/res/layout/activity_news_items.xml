@@ -3,19 +3,15 @@
     android:layout_height="match_parent"
     android:background="@color/background_main">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/news_items_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize" />
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/news_items_toolbar" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/news_items_recyclerview_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/news_items_toolbar"
-        android:paddingTop="@dimen/news_items_divider"
         android:clipToPadding="false"
         android:scrollbarStyle="outsideOverlay" />
 

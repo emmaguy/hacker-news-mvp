@@ -3,10 +3,10 @@
     <color name="main">#FF6F00</color>
     <color name="main_secondary">#E65100</color>
 
-    <color name="text_main">#FFFFFF</color>
-    <color name="text_secondary">#A7A7A7</color>
+    <color name="text_main">#000000</color>
+    <color name="text_secondary">#1F1F1F</color>
 
-    <color name="background">#01101E</color>
-    <color name="background_main">#1F1F1F</color>
-    <color name="background_news_item_contrast">#1C2936</color>
+    <color name="background">#FFFFFF</color>
+    <color name="background_main">#EFEFEF</color>
+    <color name="background_news_item_contrast">#F6F6F6</color>
 </resources>

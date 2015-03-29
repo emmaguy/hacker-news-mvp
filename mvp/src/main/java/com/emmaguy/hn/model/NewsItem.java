@@ -23,6 +23,12 @@ public class NewsItem {
     @SerializedName("score")
     private int mScore = 0;
 
+    @SerializedName("by")
+    private String mAuthor;
+
+    @SerializedName("time")
+    private long mTime;
+
     private String mPermalink;
 
     public NewsItem() {
@@ -30,7 +36,7 @@ public class NewsItem {
 
     public NewsItem(String title, String url) {
         super();
-        
+
         mTitle = title;
         mUrl = url;
     }
@@ -73,5 +79,13 @@ public class NewsItem {
 
     public void setId(String id) {
         mId = id;
+    }
+
+    public String getAuthor() {
+        return mAuthor;
+    }
+
+    public long getTime() {
+        return mTime;
     }
 }
