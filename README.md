@@ -12,3 +12,4 @@ Inspired by:
 - [Material Movies](https://github.com/saulmm/Material-Movies)
 - [Clean contacts](https://github.com/PaNaVTEC/Clean-Contacts)
 - [Mosby](http://hannesdorfmann.com/android/mosby/)
+- [Writing Maintainable Android Applications](http://www.kevinrschultz.com/blog/2014/09/21/writing-maintainable-android-applications-droidcon-nyc-talk/)
