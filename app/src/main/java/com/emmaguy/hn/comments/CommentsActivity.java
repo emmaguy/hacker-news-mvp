@@ -18,8 +18,7 @@ import com.emmaguy.hn.common.EventBusProvider;
 import com.emmaguy.hn.model.Comment;
 import com.emmaguy.hn.model.data.datasource.HackerNewsDataSource;
 import com.emmaguy.hn.model.data.datasource.NewsDataSource;
-import com.emmaguy.hn.presenter.comments.CommentsPresenter;
-import com.emmaguy.hn.presenter.comments.CommentsPresenterImpl;
+import com.emmaguy.hn.presenter.CommentsPresenter;
 import com.emmaguy.hn.view.CommentsView;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
@@ -71,8 +70,7 @@ public class CommentsActivity extends ActionBarActivity implements CommentsView 
         ArrayList<String> ids = getIntent().getStringArrayListExtra(EXTRA_NEWS_ITEM_COMMENT_KEYS_ID);
 
         mDataSource = HackerNewsDataSource.getInstance();
-        mPresenter = new CommentsPresenterImpl(this,
-                ids,
+        mPresenter = new CommentsPresenter(ids,
                 mDataSource,
                 EventBusProvider.getNetworkBusInstance());
     }
@@ -104,7 +102,7 @@ public class CommentsActivity extends ActionBarActivity implements CommentsView 
     protected void onStart() {
         super.onStart();
 
-        mPresenter.onStart();
+        mPresenter.onStart(this);
     }
 
     @Override

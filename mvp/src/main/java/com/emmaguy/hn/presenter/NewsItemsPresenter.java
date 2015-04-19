@@ -1,4 +1,4 @@
-package com.emmaguy.hn.presenter.newsitems;
+package com.emmaguy.hn.presenter;
 
 import android.support.annotation.NonNull;
 
@@ -11,19 +11,20 @@ import com.squareup.otto.Subscribe;
 /**
  * Created by emma on 21/03/15.
  */
-public class NewsItemsPresenterImpl implements NewsItemsPresenter {
+public class NewsItemsPresenter {
     private final Bus mNetworkBus;
-    private final NewsItemsView mNewsItemsView;
     private final NewsDataSource mDataSource;
 
-    public NewsItemsPresenterImpl(NewsItemsView newsItemsView, NewsDataSource dataSource, Bus networkBus) {
+    private NewsItemsView mNewsItemsView;
+
+    public NewsItemsPresenter(NewsDataSource dataSource, Bus networkBus) {
         mNetworkBus = networkBus;
         mDataSource = dataSource;
-        mNewsItemsView = newsItemsView;
     }
 
-    @Override
-    public void onStart() {
+    public void onStart(NewsItemsView newsItemsView) {
+        setView(newsItemsView);
+
         mNetworkBus.register(this);
 
         if (mNewsItemsView.isEmptyList()) {
@@ -34,9 +35,14 @@ public class NewsItemsPresenterImpl implements NewsItemsPresenter {
         }
     }
 
-    @Override
+    private void setView(NewsItemsView newsItemsView) {
+        mNewsItemsView = newsItemsView;
+    }
+
     public void onStop() {
         mNetworkBus.unregister(this);
+
+        setView(null);
     }
 
     @Subscribe

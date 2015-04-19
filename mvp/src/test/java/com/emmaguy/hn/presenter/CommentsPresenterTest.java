@@ -3,7 +3,6 @@ package com.emmaguy.hn.presenter;
 import com.emmaguy.hn.model.Comment;
 import com.emmaguy.hn.model.data.Events;
 import com.emmaguy.hn.model.data.datasource.NewsDataSource;
-import com.emmaguy.hn.presenter.comments.CommentsPresenterImpl;
 import com.emmaguy.hn.view.CommentsView;
 import com.squareup.otto.Bus;
 
@@ -22,7 +21,7 @@ import static org.mockito.Mockito.when;
 /**
  * Created by emma on 21/03/15.
  */
-public class CommentsPresenterImplTest {
+public class CommentsPresenterTest {
     @Mock
     private Bus mMockNetworkBus;
 
@@ -32,7 +31,7 @@ public class CommentsPresenterImplTest {
     @Mock
     private NewsDataSource mMockDataSource;
 
-    private CommentsPresenterImpl mPresenter;
+    private CommentsPresenter mPresenter;
 
     private ArrayList<String> mIds;
 
@@ -40,12 +39,12 @@ public class CommentsPresenterImplTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        mPresenter = new CommentsPresenterImpl(mMockView, mIds, mMockDataSource, mMockNetworkBus);
+        mPresenter = new CommentsPresenter(mIds, mMockDataSource, mMockNetworkBus);
     }
 
     @Test
     public void test_onStart_registersNetworkBus() {
-        mPresenter.onStart();
+        mPresenter.onStart(mMockView);
 
         verify(mMockNetworkBus, times(1)).register(mPresenter);
         verifyNoMoreInteractions(mMockNetworkBus);
@@ -63,7 +62,7 @@ public class CommentsPresenterImplTest {
     public void test_onStartWithEmptyView_showsLoadingIndicator() {
         when(mMockView.isEmpty()).thenReturn(true);
 
-        mPresenter.onStart();
+        mPresenter.onStart(mMockView);
 
         verify(mMockView, times(1)).showLoadingIndicator();
     }
@@ -72,7 +71,7 @@ public class CommentsPresenterImplTest {
     public void test_onStartWithEmptyView_retrievesComments() {
         when(mMockView.isEmpty()).thenReturn(true);
 
-        mPresenter.onStart();
+        mPresenter.onStart(mMockView);
 
         verify(mMockDataSource, times(1)).getComments(mIds);
         verifyNoMoreInteractions(mMockDataSource);
@@ -82,7 +81,7 @@ public class CommentsPresenterImplTest {
     public void test_onStartWithoutEmptyView_doesNotShowLoadingIndicator() {
         when(mMockView.isEmpty()).thenReturn(false);
 
-        mPresenter.onStart();
+        mPresenter.onStart(mMockView);
 
         verify(mMockView, times(0)).showLoadingIndicator();
     }
@@ -91,13 +90,14 @@ public class CommentsPresenterImplTest {
     public void test_onStartWithoutEmptyView_doesNotRetrievesComments() {
         when(mMockView.isEmpty()).thenReturn(false);
 
-        mPresenter.onStart();
+        mPresenter.onStart(mMockView);
 
         verify(mMockDataSource, times(0)).getComments(mIds);
     }
 
     @Test
     public void test_onCommentsReceived_hidesLoadingIndicator() {
+        mPresenter.onStart(mMockView);
         mPresenter.onCommentsReceived(new Events.CommentsSuccessEvent(new ArrayList<Comment>()));
 
         verify(mMockView, times(1)).hideLoadingIndicator();
@@ -106,6 +106,8 @@ public class CommentsPresenterImplTest {
     @Test
     public void test_onCommentsReceived_showsComments() {
         ArrayList<Comment> comments = new ArrayList<>();
+
+        mPresenter.onStart(mMockView);
         mPresenter.onCommentsReceived(new Events.CommentsSuccessEvent(comments));
 
         verify(mMockView, times(1)).showComments(comments);

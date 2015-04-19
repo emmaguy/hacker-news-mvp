@@ -17,8 +17,7 @@ import com.emmaguy.hn.common.EventBusProvider;
 import com.emmaguy.hn.model.NewsItem;
 import com.emmaguy.hn.model.data.datasource.NewsDataSource;
 import com.emmaguy.hn.model.data.datasource.HackerNewsDataSource;
-import com.emmaguy.hn.presenter.newsitems.NewsItemsPresenter;
-import com.emmaguy.hn.presenter.newsitems.NewsItemsPresenterImpl;
+import com.emmaguy.hn.presenter.NewsItemsPresenter;
 import com.emmaguy.hn.view.NewsItemsView;
 
 import java.util.List;
@@ -51,8 +50,7 @@ public class NewsItemsActivity extends ActionBarActivity implements NewsItemsVie
         mNewsItemsList.setAdapter(mAdapter);
 
         mDataSource = HackerNewsDataSource.getInstance();
-        mPresenter = new NewsItemsPresenterImpl(this,
-                mDataSource,
+        mPresenter = new NewsItemsPresenter(mDataSource,
                 EventBusProvider.getNetworkBusInstance());
     }
 
@@ -66,7 +64,7 @@ public class NewsItemsActivity extends ActionBarActivity implements NewsItemsVie
     protected void onStart() {
         super.onStart();
 
-        mPresenter.onStart();
+        mPresenter.onStart(this);
     }
 
     @Override

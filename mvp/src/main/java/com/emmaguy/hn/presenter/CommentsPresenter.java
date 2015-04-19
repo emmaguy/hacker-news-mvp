@@ -1,4 +1,4 @@
-package com.emmaguy.hn.presenter.comments;
+package com.emmaguy.hn.presenter;
 
 import android.support.annotation.NonNull;
 
@@ -13,21 +13,22 @@ import java.util.ArrayList;
 /**
  * Created by emma on 22/03/15.
  */
-public class CommentsPresenterImpl implements CommentsPresenter {
+public class CommentsPresenter {
     private final Bus mNetworkBus;
-    private final CommentsView mView;
     private final ArrayList<String> mIds;
     private final NewsDataSource mDataSource;
 
-    public CommentsPresenterImpl(CommentsView view, ArrayList<String> ids, NewsDataSource dataSource, Bus bus) {
+    private CommentsView mView;
+
+    public CommentsPresenter(ArrayList<String> ids, NewsDataSource dataSource, Bus bus) {
         mIds = ids;
-        mView = view;
         mNetworkBus = bus;
         mDataSource = dataSource;
     }
 
-    @Override
-    public void onStart() {
+    public void onStart(CommentsView view) {
+        setView(view);
+
         mNetworkBus.register(this);
 
         if (mView.isEmpty()) {
@@ -36,9 +37,14 @@ public class CommentsPresenterImpl implements CommentsPresenter {
         }
     }
 
-    @Override
+    private void setView(CommentsView view) {
+        mView = view;
+    }
+
     public void onStop() {
         mNetworkBus.unregister(this);
+
+        setView(null);
     }
 
     @Subscribe
