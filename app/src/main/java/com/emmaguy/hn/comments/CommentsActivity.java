@@ -140,7 +140,8 @@ public class CommentsActivity extends ActionBarActivity implements CommentsView 
 
         comments.removeAll(toRemoveComments);
 
-        while (!comments.isEmpty()) {
+        boolean hasRemovedComments;
+        do {
             toRemoveComments.clear();
 
             for (Comment c : comments) {
@@ -150,7 +151,8 @@ public class CommentsActivity extends ActionBarActivity implements CommentsView 
                 }
             }
             comments.removeAll(toRemoveComments);
-        }
+            hasRemovedComments = toRemoveComments.size() > 0;
+        } while (hasRemovedComments);
 
         addTreeView(root);
     }
