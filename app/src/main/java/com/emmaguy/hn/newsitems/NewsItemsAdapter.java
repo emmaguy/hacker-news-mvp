@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.emmaguy.hn.R;
-import com.emmaguy.hn.Utils;
 import com.emmaguy.hn.comments.CommentsActivity;
+import com.emmaguy.hn.common.RelativeTimeFormatter;
 import com.emmaguy.hn.model.NewsItem;
 import com.emmaguy.hn.newsitemdetail.NewsItemDetailActivity;
 
@@ -28,10 +28,12 @@ import butterknife.OnClick;
  */
 public class NewsItemsAdapter extends RecyclerView.Adapter<NewsItemsAdapter.NewsItemHolder> {
     private final List<NewsItem> mNewsItems = new ArrayList<>();
-    private Context mContext;
+    private final Context mContext;
+    private final RelativeTimeFormatter mRelativeTimeFormatter;
 
-    public NewsItemsAdapter(Context context) {
+    public NewsItemsAdapter(Context context, RelativeTimeFormatter relativeTimeFormatter) {
         mContext = context;
+        mRelativeTimeFormatter = relativeTimeFormatter;
     }
 
     public void setNewsItems(@NonNull List<NewsItem> items) {
@@ -66,7 +68,7 @@ public class NewsItemsAdapter extends RecyclerView.Adapter<NewsItemsAdapter.News
                 newsItem.getScore(),
                 newsItem.getScore(),
                 newsItem.getAuthor(),
-                Utils.getRelativeTimeSpanString(newsItem.getTime()));
+                mRelativeTimeFormatter.format(newsItem.getTime()));
         holder.mDescription.setText(text);
     }
 

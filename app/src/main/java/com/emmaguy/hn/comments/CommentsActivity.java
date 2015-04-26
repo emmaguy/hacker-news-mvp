@@ -10,11 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.emmaguy.hn.R;
-import com.emmaguy.hn.Utils;
 import com.emmaguy.hn.common.EventBusProvider;
+import com.emmaguy.hn.common.PlainTextShareIntentBuilder;
 import com.emmaguy.hn.model.Comment;
 import com.emmaguy.hn.model.data.datasource.HackerNewsDataSource;
 import com.emmaguy.hn.model.data.datasource.NewsDataSource;
@@ -38,17 +39,20 @@ public class CommentsActivity extends AppCompatActivity implements CommentsView 
     public static final String EXTRA_NEWS_ITEM_PERMALINK = "key_news_item_permalink";
     public static final String EXTRA_NEWS_ITEM_COMMENT_KEYS_ID = "key_news_item_comment_ids";
 
-    @InjectView(R.id.toolbar) Toolbar mToolbar;
     @InjectView(R.id.comments_progress_bar_loading) ProgressBar mLoadingIndicator;
-    @InjectView(R.id.activity_news_item_comments_root) ViewGroup mRootViewGroup;
+    @InjectView(R.id.comments_viewgroup_content) ViewGroup mRootViewGroup;
+    @InjectView(R.id.comments_textview_message) TextView mMessage;
+    @InjectView(R.id.comments_toolbar) Toolbar mToolbar;
 
-    private String mTitle;
-    private String mPermalink;
-    private String mNewsItemId;
+    private final PlainTextShareIntentBuilder mIntentBuilder = new PlainTextShareIntentBuilder();
+
     private String mNewsItemAuthor;
+    private String mNewsItemId;
+    private String mPermalink;
+    private String mTitle;
 
-    private NewsDataSource mDataSource;
     private CommentsPresenter mPresenter;
+    private NewsDataSource mDataSource;
 
     private boolean mCommentsTreeViewAdded = false;
 
@@ -73,7 +77,7 @@ public class CommentsActivity extends AppCompatActivity implements CommentsView 
         mPresenter = new CommentsPresenter(ids, mDataSource, EventBusProvider.getNetworkBusInstance());
     }
 
-    @OnClick(R.id.toolbar)
+    @OnClick(R.id.comments_toolbar)
     void viewFullTitle() {
         Toast.makeText(this, mTitle, Toast.LENGTH_SHORT).show();
     }
@@ -90,7 +94,7 @@ public class CommentsActivity extends AppCompatActivity implements CommentsView 
         switch (item.getItemId()) {
             case R.id.share:
                 Toast.makeText(this, mPermalink, Toast.LENGTH_SHORT).show();
-                startActivity(Utils.getShareIntent(mPermalink));
+                startActivity(mIntentBuilder.build(mPermalink));
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -118,6 +122,16 @@ public class CommentsActivity extends AppCompatActivity implements CommentsView 
     @Override
     public void hideLoadingIndicator() {
         mLoadingIndicator.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideNoCommentsMessage() {
+        mMessage.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showNoCommentsMessage() {
+        mMessage.setVisibility(View.VISIBLE);
     }
 
     @Override

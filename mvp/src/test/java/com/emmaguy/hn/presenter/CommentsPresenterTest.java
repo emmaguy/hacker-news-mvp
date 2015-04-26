@@ -12,7 +12,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -33,11 +36,13 @@ public class CommentsPresenterTest {
 
     private CommentsPresenter mPresenter;
 
-    private ArrayList<String> mIds;
+    private ArrayList<String> mIds = new ArrayList<>();
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+
+        mIds.add("1");
 
         mPresenter = new CommentsPresenter(mIds, mMockDataSource, mMockNetworkBus);
     }
@@ -111,5 +116,19 @@ public class CommentsPresenterTest {
         mPresenter.onCommentsReceived(new CommentEvents.RequestSucceededEvent(comments));
 
         verify(mMockView, times(1)).showComments(comments);
+    }
+
+    @Test
+    public void test_presenterWithEmptyViewAndWithEmptyIds_showsNoCommentsMessageAndDoesNotTryToRetrieveCommentsAndDoesNotShowLoadingIndicator() {
+        when(mMockView.isEmpty()).thenReturn(true);
+        ArrayList<String> ids = new ArrayList<>();
+
+        CommentsPresenter p = new CommentsPresenter(ids, mMockDataSource, mMockNetworkBus);
+
+        p.onStart(mMockView);
+
+        verify(mMockDataSource, times(0)).getComments(ids);
+        verify(mMockView, times(0)).showLoadingIndicator();
+        verify(mMockView, times(1)).showNoCommentsMessage();
     }
 }
