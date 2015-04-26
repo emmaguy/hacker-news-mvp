@@ -34,6 +34,12 @@ public class NewsItem {
     public NewsItem() {
     }
 
+    public NewsItem(String id) {
+        super();
+
+        mId = id;
+    }
+
     public NewsItem(String title, String url) {
         super();
 
@@ -75,10 +81,6 @@ public class NewsItem {
 
     public String getPermalink() {
         return mPermalink;
-    }
-
-    public void setId(String id) {
-        mId = id;
     }
 
     public String getAuthor() {

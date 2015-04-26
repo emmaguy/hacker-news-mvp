@@ -1,6 +1,7 @@
 package com.emmaguy.hn.model.data.datasource;
 
 import com.emmaguy.hn.common.EventBusProvider;
+import com.emmaguy.hn.common.Utils;
 import com.emmaguy.hn.model.Comment;
 import com.emmaguy.hn.model.NewsItem;
 import com.emmaguy.hn.model.data.HackerNewsApiService;
@@ -14,7 +15,6 @@ import java.util.List;
 
 import retrofit.RestAdapter;
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -27,7 +27,6 @@ import rx.schedulers.Schedulers;
 public class HackerNewsDataSource implements NewsDataSource {
     private static final int MAX_NUMBER_STORIES = 25;
     private static final String ENDPOINT_URL_HACKER_NEWS_API = "https://hacker-news.firebaseio.com";
-    private static final String HACKER_NEWS_NEWS_ITEM_URL = "https://news.ycombinator.com/item?id=";
 
     private static NewsDataSource sDataSourceInstance = null;
     private final HackerNewsApiService mHackerNewsApiService;
@@ -50,47 +49,11 @@ public class HackerNewsDataSource implements NewsDataSource {
 
     @Override
     public void getLatestNewsItems() {
-        createLatestNewsItemsObservable()
+        new LatestNewsItemsObservableBuilder(MAX_NUMBER_STORIES, mHackerNewsApiService).build()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new OnListNewsItemNextListener(EventBusProvider.getNetworkBusInstance()),
                         new OnListNewsItemErrorListener(EventBusProvider.getNetworkBusInstance()));
-    }
-
-    /**
-     * Creates an observable which retrieves the ids of the latest top stories and then fetches a list containing
-     * {@link MAX_NUMBER_STORIES} {@link NewsItem}s. Uses concatMap to preserve ordering, so we don't have to sort,
-     * we can just show the news items in the order we're given
-     *
-     * @return Observable list of the top {@link NewsItem}s
-     */
-    private Observable<List<NewsItem>> createLatestNewsItemsObservable() {
-        return mHackerNewsApiService.topStories()
-                .lift(this.<String>flattenList())
-                .limit(MAX_NUMBER_STORIES)
-                .concatMap(new Func1<String, Observable<NewsItem>>() {
-                    @Override
-                    public Observable<NewsItem> call(String id) {
-                        return mHackerNewsApiService.item(id);
-                    }
-                })
-                .doOnEach(new Subscriber<NewsItem>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(NewsItem newsItem) {
-                        newsItem.setPermalink(HACKER_NEWS_NEWS_ITEM_URL);
-                    }
-                })
-                .toList();
     }
 
     @Override
@@ -133,7 +96,7 @@ public class HackerNewsDataSource implements NewsDataSource {
                         return createCommentsObservable(comment.getChildCommentIds()).concatWith(o);
                     }
                 })
-                .lift(this.<Comment>flattenList())
+                .lift(Utils.<Comment>flattenList())
                 .filter(new Func1<Comment, Boolean>() {
                     @Override
                     public Boolean call(Comment comment) {
@@ -141,31 +104,5 @@ public class HackerNewsDataSource implements NewsDataSource {
                     }
                 })
                 .toList();
-    }
-
-    private static <T> Observable.Operator<T, List<T>> flattenList() {
-        return new Observable.Operator<T, List<T>>() {
-            @Override
-            public Subscriber<? super List<T>> call(final Subscriber<? super T> subscriber) {
-                return new Subscriber<List<T>>() {
-                    @Override
-                    public void onCompleted() {
-                        subscriber.onCompleted();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        subscriber.onError(e);
-                    }
-
-                    @Override
-                    public void onNext(List<T> list) {
-                        for (T c : list) {
-                            subscriber.onNext(c);
-                        }
-                    }
-                };
-            }
-        };
     }
 }
