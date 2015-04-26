@@ -2,8 +2,8 @@ package com.emmaguy.hn.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.emmaguy.hn.model.data.Events;
 import com.emmaguy.hn.model.data.datasource.NewsDataSource;
+import com.emmaguy.hn.model.data.events.NewsItemEvents;
 import com.emmaguy.hn.view.NewsItemsView;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -46,13 +46,13 @@ public class NewsItemsPresenter {
     }
 
     @Subscribe
-    public void onNewsItemsReceived(@NonNull Events.NewsItemsSuccessEvent event) {
+    public void onNewsItemsReceived(@NonNull NewsItemEvents.RequestSucceededEvent event) {
         mNewsItemsView.hideLoadingIndicator();
-        mNewsItemsView.showNewsItems(event.getData());
+        mNewsItemsView.showNewsItems(event.getNewsItems());
     }
 
     @Subscribe
-    public void onRetrieveNewsItemsFailed(@NonNull Events.NewsItemsRequestFailedEvent failed) {
+    public void onRetrieveNewsItemsFailed(@NonNull NewsItemEvents.RequestFailedEvent failed) {
         mNewsItemsView.hideLoadingIndicator();
         mNewsItemsView.showError();
     }

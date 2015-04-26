@@ -1,11 +1,9 @@
 package com.emmaguy.hn.model.data.newsitems;
 
 import com.emmaguy.hn.model.NewsItem;
-import com.emmaguy.hn.model.NewsItemComparator;
-import com.emmaguy.hn.model.data.Events;
+import com.emmaguy.hn.model.data.events.NewsItemEvents;
 import com.squareup.otto.Bus;
 
-import java.util.Collections;
 import java.util.List;
 
 import rx.functions.Action1;
@@ -22,7 +20,7 @@ public class OnListNewsItemNextListener implements Action1<java.util.List<NewsIt
 
     @Override
     public void call(List<NewsItem> newsItems) {
-        mNetworkBus.post(new Events.NewsItemsSuccessEvent(newsItems));
+        mNetworkBus.post(new NewsItemEvents.RequestSucceededEvent(newsItems));
     }
 }
 

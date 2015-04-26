@@ -1,7 +1,7 @@
 package com.emmaguy.hn.model.data.newsitems;
 
 import com.emmaguy.hn.model.NewsItem;
-import com.emmaguy.hn.model.data.Events;
+import com.emmaguy.hn.model.data.events.NewsItemEvents;
 import com.squareup.otto.Bus;
 
 import org.junit.Before;
@@ -10,11 +10,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-import static org.hamcrest.Matchers.contains;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -42,6 +38,6 @@ public class OnListNewsItemNextListenerTest {
 
         mNextListener.call(newsItems);
 
-        verify(mMockNetworkBus, times(1)).post(any(Events.NewsItemsSuccessEvent.class));
+        verify(mMockNetworkBus, times(1)).post(any(NewsItemEvents.RequestSucceededEvent.class));
     }
 }

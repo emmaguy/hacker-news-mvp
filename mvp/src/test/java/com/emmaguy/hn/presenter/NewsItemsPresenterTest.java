@@ -1,8 +1,8 @@
 package com.emmaguy.hn.presenter;
 
 import com.emmaguy.hn.model.NewsItem;
-import com.emmaguy.hn.model.data.Events;
 import com.emmaguy.hn.model.data.datasource.NewsDataSource;
+import com.emmaguy.hn.model.data.events.NewsItemEvents;
 import com.emmaguy.hn.view.NewsItemsView;
 import com.squareup.otto.Bus;
 
@@ -105,7 +105,7 @@ public class NewsItemsPresenterTest {
     @Test
     public void test_newsItemsReceived_hidesLoadingIndicator() {
         mPresenter.onStart(mMockView);
-        mPresenter.onNewsItemsReceived(new Events.NewsItemsSuccessEvent(new ArrayList<NewsItem>()));
+        mPresenter.onNewsItemsReceived(new NewsItemEvents.RequestSucceededEvent(new ArrayList<NewsItem>()));
 
         verify(mMockView, times(1)).hideLoadingIndicator();
     }
@@ -115,7 +115,7 @@ public class NewsItemsPresenterTest {
         ArrayList<NewsItem> newsItems = new ArrayList<>();
 
         mPresenter.onStart(mMockView);
-        mPresenter.onNewsItemsReceived(new Events.NewsItemsSuccessEvent(newsItems));
+        mPresenter.onNewsItemsReceived(new NewsItemEvents.RequestSucceededEvent(newsItems));
 
         verify(mMockView, times(1)).showNewsItems(newsItems);
     }
@@ -123,7 +123,7 @@ public class NewsItemsPresenterTest {
     @Test
     public void test_newsItemsFailedToRetrieve_showError() {
         mPresenter.onStart(mMockView);
-        mPresenter.onRetrieveNewsItemsFailed(new Events.NewsItemsRequestFailedEvent());
+        mPresenter.onRetrieveNewsItemsFailed(new NewsItemEvents.RequestFailedEvent());
 
         verify(mMockView, times(1)).showError();
     }
@@ -131,7 +131,7 @@ public class NewsItemsPresenterTest {
     @Test
     public void test_newsItemsFailedToRetrieve_hidesLoadingIndicator() {
         mPresenter.onStart(mMockView);
-        mPresenter.onRetrieveNewsItemsFailed(new Events.NewsItemsRequestFailedEvent());
+        mPresenter.onRetrieveNewsItemsFailed(new NewsItemEvents.RequestFailedEvent());
 
         verify(mMockView, times(1)).hideLoadingIndicator();
     }

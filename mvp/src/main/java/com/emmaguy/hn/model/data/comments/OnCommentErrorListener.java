@@ -1,6 +1,6 @@
 package com.emmaguy.hn.model.data.comments;
 
-import com.emmaguy.hn.model.data.Events;
+import com.emmaguy.hn.model.data.events.CommentEvents;
 import com.squareup.otto.Bus;
 
 import rx.functions.Action1;
@@ -17,6 +17,6 @@ public class OnCommentErrorListener implements Action1<Throwable> {
 
     @Override
     public void call(Throwable throwable) {
-        mNetworkBus.post(new Events.CommentRequestFailedEvent());
+        mNetworkBus.post(new CommentEvents.RequestFailedEvent());
     }
 }

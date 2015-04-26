@@ -1,8 +1,8 @@
 package com.emmaguy.hn.presenter;
 
 import com.emmaguy.hn.model.Comment;
-import com.emmaguy.hn.model.data.Events;
 import com.emmaguy.hn.model.data.datasource.NewsDataSource;
+import com.emmaguy.hn.model.data.events.CommentEvents;
 import com.emmaguy.hn.view.CommentsView;
 import com.squareup.otto.Bus;
 
@@ -98,7 +98,7 @@ public class CommentsPresenterTest {
     @Test
     public void test_onCommentsReceived_hidesLoadingIndicator() {
         mPresenter.onStart(mMockView);
-        mPresenter.onCommentsReceived(new Events.CommentsSuccessEvent(new ArrayList<Comment>()));
+        mPresenter.onCommentsReceived(new CommentEvents.RequestSucceededEvent(new ArrayList<Comment>()));
 
         verify(mMockView, times(1)).hideLoadingIndicator();
     }
@@ -108,7 +108,7 @@ public class CommentsPresenterTest {
         ArrayList<Comment> comments = new ArrayList<>();
 
         mPresenter.onStart(mMockView);
-        mPresenter.onCommentsReceived(new Events.CommentsSuccessEvent(comments));
+        mPresenter.onCommentsReceived(new CommentEvents.RequestSucceededEvent(comments));
 
         verify(mMockView, times(1)).showComments(comments);
     }

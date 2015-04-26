@@ -1,6 +1,6 @@
 package com.emmaguy.hn.model.data.comments;
 
-import com.emmaguy.hn.model.data.Events;
+import com.emmaguy.hn.model.data.events.CommentEvents;
 import com.squareup.otto.Bus;
 
 import org.junit.Before;
@@ -33,7 +33,7 @@ public class OnCommentErrorListenerTest {
     public void test_errorListener_postsRequestFailedOnEventBus() {
         mErrorListener.call(new Throwable("blah"));
 
-        verify(mMockNetworkBus, times(1)).post(any(Events.CommentRequestFailedEvent.class));
+        verify(mMockNetworkBus, times(1)).post(any(CommentEvents.RequestFailedEvent.class));
         verifyNoMoreInteractions(mMockNetworkBus);
     }
 }

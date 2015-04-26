@@ -70,9 +70,7 @@ public class CommentsActivity extends AppCompatActivity implements CommentsView 
         ArrayList<String> ids = getIntent().getStringArrayListExtra(EXTRA_NEWS_ITEM_COMMENT_KEYS_ID);
 
         mDataSource = HackerNewsDataSource.getInstance();
-        mPresenter = new CommentsPresenter(ids,
-                mDataSource,
-                EventBusProvider.getNetworkBusInstance());
+        mPresenter = new CommentsPresenter(ids, mDataSource, EventBusProvider.getNetworkBusInstance());
     }
 
     @OnClick(R.id.toolbar)

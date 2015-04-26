@@ -50,8 +50,7 @@ public class NewsItemsActivity extends AppCompatActivity implements NewsItemsVie
         mNewsItemsList.setAdapter(mAdapter);
 
         mDataSource = HackerNewsDataSource.getInstance();
-        mPresenter = new NewsItemsPresenter(mDataSource,
-                EventBusProvider.getNetworkBusInstance());
+        mPresenter = new NewsItemsPresenter(mDataSource, EventBusProvider.getNetworkBusInstance());
     }
 
     private void initialiseList() {

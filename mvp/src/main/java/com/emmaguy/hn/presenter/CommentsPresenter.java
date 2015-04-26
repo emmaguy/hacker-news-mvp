@@ -2,8 +2,8 @@ package com.emmaguy.hn.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.emmaguy.hn.model.data.Events;
 import com.emmaguy.hn.model.data.datasource.NewsDataSource;
+import com.emmaguy.hn.model.data.events.CommentEvents;
 import com.emmaguy.hn.view.CommentsView;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -48,8 +48,8 @@ public class CommentsPresenter {
     }
 
     @Subscribe
-    public void onCommentsReceived(@NonNull Events.CommentsSuccessEvent event) {
+    public void onCommentsReceived(@NonNull CommentEvents.RequestSucceededEvent event) {
         mView.hideLoadingIndicator();
-        mView.showComments(event.getData());
+        mView.showComments(event.getComments());
     }
 }

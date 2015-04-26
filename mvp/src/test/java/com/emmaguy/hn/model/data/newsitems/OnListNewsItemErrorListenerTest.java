@@ -1,6 +1,6 @@
 package com.emmaguy.hn.model.data.newsitems;
 
-import com.emmaguy.hn.model.data.Events;
+import com.emmaguy.hn.model.data.events.NewsItemEvents;
 import com.squareup.otto.Bus;
 
 import org.junit.Before;
@@ -33,7 +33,7 @@ public class OnListNewsItemErrorListenerTest {
     public void test_errorListener_postsRequestFailedOnEventBus() {
         mErrorListener.call(new Throwable("blah"));
 
-        verify(mMockNetworkBus, times(1)).post(any(Events.NewsItemsRequestFailedEvent.class));
+        verify(mMockNetworkBus, times(1)).post(any(NewsItemEvents.RequestFailedEvent.class));
         verifyNoMoreInteractions(mMockNetworkBus);
     }
 }
