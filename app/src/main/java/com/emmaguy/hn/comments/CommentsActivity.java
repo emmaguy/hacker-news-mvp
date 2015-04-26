@@ -1,7 +1,7 @@
 package com.emmaguy.hn.comments;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class CommentsActivity extends ActionBarActivity implements CommentsView {
+public class CommentsActivity extends AppCompatActivity implements CommentsView {
     public static final String EXTRA_NEWS_ITEM_ID = "key_news_item_id";
     public static final String EXTRA_NEWS_ITEM_TITLE = "key_news_item_title";
     public static final String EXTRA_NEWS_ITEM_AUTHOR = "key_news_item_author";

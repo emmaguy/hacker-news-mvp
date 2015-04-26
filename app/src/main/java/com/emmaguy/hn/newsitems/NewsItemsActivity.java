@@ -2,7 +2,7 @@ package com.emmaguy.hn.newsitems;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,8 +15,8 @@ import com.emmaguy.hn.R;
 import com.emmaguy.hn.common.DividerItemDecoration;
 import com.emmaguy.hn.common.EventBusProvider;
 import com.emmaguy.hn.model.NewsItem;
-import com.emmaguy.hn.model.data.datasource.NewsDataSource;
 import com.emmaguy.hn.model.data.datasource.HackerNewsDataSource;
+import com.emmaguy.hn.model.data.datasource.NewsDataSource;
 import com.emmaguy.hn.presenter.NewsItemsPresenter;
 import com.emmaguy.hn.view.NewsItemsView;
 
@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
-public class NewsItemsActivity extends ActionBarActivity implements NewsItemsView {
+public class NewsItemsActivity extends AppCompatActivity implements NewsItemsView {
     @InjectView(R.id.news_items_toolbar) Toolbar mToolbar;
     @InjectView(R.id.news_items_textview_error) TextView mErrorTextView;
     @InjectView(R.id.news_items_recyclerview_list) RecyclerView mNewsItemsList;
