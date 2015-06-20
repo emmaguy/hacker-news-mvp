@@ -29,6 +29,7 @@ import butterknife.InjectView;
 
 public class NewsItemsActivity extends AppCompatActivity implements NewsItemsView {
     @InjectView(R.id.news_items_toolbar) Toolbar mToolbar;
+    @InjectView(R.id.news_items_textview_title) TextView mTitle;
     @InjectView(R.id.news_items_textview_error) TextView mErrorTextView;
     @InjectView(R.id.news_items_recyclerview_list) RecyclerView mNewsItemsList;
     @InjectView(R.id.news_items_progress_bar_loading) ProgressBar mProgressBar;
@@ -47,6 +48,7 @@ public class NewsItemsActivity extends AppCompatActivity implements NewsItemsVie
 
         ButterKnife.inject(this);
         setSupportActionBar(mToolbar);
+        mTitle.setText(mToolbar.getTitle());
 
         initialiseList();
         mAdapter = new NewsItemsAdapter(this, mRelativeTimeFormatter);

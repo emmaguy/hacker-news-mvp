@@ -30,7 +30,6 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 
 public class CommentsActivity extends AppCompatActivity implements CommentsView {
     public static final String EXTRA_NEWS_ITEM_ID = "key_news_item_id";
@@ -42,6 +41,7 @@ public class CommentsActivity extends AppCompatActivity implements CommentsView 
     @InjectView(R.id.comments_progress_bar_loading) ProgressBar mLoadingIndicator;
     @InjectView(R.id.comments_viewgroup_content) ViewGroup mRootViewGroup;
     @InjectView(R.id.comments_textview_message) TextView mMessage;
+    @InjectView(R.id.comments_textview_title) TextView mTitle;
     @InjectView(R.id.comments_toolbar) Toolbar mToolbar;
 
     private final PlainTextShareIntentBuilder mIntentBuilder = new PlainTextShareIntentBuilder();
@@ -49,7 +49,6 @@ public class CommentsActivity extends AppCompatActivity implements CommentsView 
     private String mNewsItemAuthor;
     private String mNewsItemId;
     private String mPermalink;
-    private String mTitle;
 
     private CommentsPresenter mPresenter;
     private NewsDataSource mDataSource;
@@ -65,8 +64,7 @@ public class CommentsActivity extends AppCompatActivity implements CommentsView 
 
         setSupportActionBar(mToolbar);
 
-        mTitle = getIntent().getStringExtra(EXTRA_NEWS_ITEM_TITLE);
-        setTitle(mTitle);
+        mTitle.setText(getIntent().getStringExtra(EXTRA_NEWS_ITEM_TITLE));
 
         mNewsItemId = getIntent().getStringExtra(EXTRA_NEWS_ITEM_ID);
         mNewsItemAuthor = getIntent().getStringExtra(EXTRA_NEWS_ITEM_AUTHOR);
@@ -75,11 +73,6 @@ public class CommentsActivity extends AppCompatActivity implements CommentsView 
 
         mDataSource = HackerNewsDataSource.getInstance();
         mPresenter = new CommentsPresenter(ids, mDataSource, EventBusProvider.getNetworkBusInstance());
-    }
-
-    @OnClick(R.id.comments_toolbar)
-    void viewFullTitle() {
-        Toast.makeText(this, mTitle, Toast.LENGTH_SHORT).show();
     }
 
     @Override

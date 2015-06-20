@@ -10,6 +10,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.emmaguy.hn.R;
@@ -25,12 +26,11 @@ public class NewsItemDetailActivity extends AppCompatActivity {
     public static final String EXTRA_NEWS_ITEM_KEY_TITLE = "key_news_item_title";
 
     @InjectView(R.id.news_item_detail_toolbar) Toolbar mToolbar;
+    @InjectView(R.id.news_item_detail_textview_title) TextView mTitle;
     @InjectView(R.id.news_item_detail_web_view_content) WebView mWebView;
     @InjectView(R.id.news_item_detail_progress_bar_loading) ProgressBar mProgressBar;
 
     private final PlainTextShareIntentBuilder mIntentBuilder = new PlainTextShareIntentBuilder();
-
-    private String mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +40,7 @@ public class NewsItemDetailActivity extends AppCompatActivity {
         ButterKnife.inject(this);
 
         setSupportActionBar(mToolbar);
-        mTitle = getIntent().getStringExtra(EXTRA_NEWS_ITEM_KEY_TITLE);
-        setTitle(mTitle);
+        mTitle.setText(getIntent().getStringExtra(EXTRA_NEWS_ITEM_KEY_TITLE));
 
         String url = getIntent().getStringExtra(EXTRA_NEWS_ITEM_KEY_URL);
 
@@ -66,11 +65,6 @@ public class NewsItemDetailActivity extends AppCompatActivity {
                 return false;
             }
         });
-    }
-
-    @OnClick(R.id.news_item_detail_toolbar)
-    void viewFullTitle() {
-        Toast.makeText(this, mTitle, Toast.LENGTH_SHORT).show();
     }
 
     @Override

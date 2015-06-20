@@ -9,7 +9,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize" />
+        android:minHeight="?attr/actionBarSize">
+
+        <TextView
+            android:id="@+id/news_item_detail_textview_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            tools:text="a really long title which wraps to the second line" />
+
+    </android.support.v7.widget.Toolbar>
 
     <ProgressBar
         android:id="@+id/news_item_detail_progress_bar_loading"

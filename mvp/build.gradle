@@ -5,8 +5,7 @@ dependencies {
 
     compile 'com.squareup:otto:1.3.5'
 
-    compile 'com.netflix.rxjava:rxjava-core:0.20.+'
-    compile 'com.netflix.rxjava:rxjava-android:0.20.+'
+    compile 'io.reactivex:rxandroid:0.24.0'
 
     compile 'com.squareup.retrofit:retrofit:1.9.+'
 

@@ -11,7 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize" />
+        android:minHeight="?attr/actionBarSize">
+
+        <TextView
+            android:id="@+id/comments_textview_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            tools:text="a really long title which wraps to the second line" />
+
+    </android.support.v7.widget.Toolbar>
 
     <FrameLayout
         android:id="@+id/comments_viewgroup_content"
