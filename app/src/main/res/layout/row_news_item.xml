@@ -7,9 +7,10 @@
 
     <LinearLayout
         android:id="@+id/row_news_item_view_group_comments"
-        android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:background="@color/background_news_item_contrast">
 
         <com.balysv.materialripple.MaterialRippleLayout
@@ -22,6 +23,7 @@
                 android:id="@+id/row_news_item_textview_comments"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/comment"
                 android:src="@drawable/ic_comments" />
 
         </com.balysv.materialripple.MaterialRippleLayout>
@@ -32,25 +34,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_toLeftOf="@id/row_news_item_view_group_comments"
+        android:layout_toStartOf="@id/row_news_item_view_group_comments"
         app:mrl_rippleAlpha="0.2"
         app:mrl_rippleColor="@color/main_secondary">
 
         <LinearLayout
-            android:gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/news_item_padding"
+            android:layout_marginLeft="@dimen/news_item_padding"
+            android:layout_marginRight="@dimen/news_item_padding"
+            android:layout_marginStart="@dimen/news_item_padding"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/row_news_item_textview_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/news_item_padding"
-                android:paddingRight="@dimen/news_item_padding"
-                android:textColor="@color/text_main"
+                android:ellipsize="end"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:ellipsize="end"
+                android:textColor="@color/text_main"
                 android:textSize="15sp"
                 tools:text="awesome story title blah blah" />
 
@@ -58,15 +63,14 @@
                 android:id="@+id/row_news_item_textview_url"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/news_item_padding"
                 android:autoLink="web"
-                android:textColorLink="@color/selector_news_item_web_link"
                 android:background="@drawable/selector_news_item_background"
-                android:paddingTop="1dp"
-                android:paddingBottom="1dp"
                 android:maxLines="1"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp"
                 android:singleLine="true"
-                android:textSize="12sp"
+                android:textColorLink="@color/selector_news_item_web_link"
+                android:textSize="13sp"
                 tools:text="www.emmaisawesome.com" />
 
             <TextView
@@ -74,8 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_secondary"
-                android:paddingLeft="@dimen/news_item_padding"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 tools:text="123 points" />
 
         </LinearLayout>

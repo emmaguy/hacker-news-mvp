@@ -3,6 +3,7 @@
 
     <string name="failed_to_get_latest_news">Failed to get latest news</string>
     <string name="share">share</string>
+    <string name="comment">comment</string>
 
     <plurals name="news_item_description">
         <item quantity="one">%1$d point by %2$s %3$s</item>

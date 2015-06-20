@@ -23,6 +23,7 @@ public class CommentTreeViewHolder extends TreeNode.BaseNodeViewHolder<Comment> 
     }
 
     @Override
+    @SuppressWarnings("InflateParams")
     public View createNodeView(TreeNode treeNode, Comment comment) {
         final View view = mLayoutInflater.inflate(R.layout.row_comment_tree_node, null, false);
         TextView textView = (TextView) view.findViewById(R.id.row_comment_textview_text);

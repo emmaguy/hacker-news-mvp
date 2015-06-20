@@ -5,8 +5,8 @@ jdk:
 
 env:
   global:
-    - ANDROID_SDK_VERSION="r24.0.2"
-    - BUILD_TOOLS="21.1.2"
+    - ANDROID_SDK_VERSION="r24.3.3"
+    - BUILD_TOOLS="22.0.1"
     - TARGET_API="22"
 
 before_install:
@@ -37,7 +37,7 @@ before_install:
   - echo yes | android update sdk --filter extra-android-m2repository --no-ui --force > /dev/null
 
 install:
-  ./gradlew clean build
+  ./gradlew clean build --stacktrace
 
 script:
   ./gradlew test

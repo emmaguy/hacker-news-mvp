@@ -3,14 +3,13 @@ package com.emmaguy.hn.model.data.datasource;
 import com.emmaguy.hn.common.EventBusProvider;
 import com.emmaguy.hn.common.Utils;
 import com.emmaguy.hn.model.Comment;
-import com.emmaguy.hn.model.NewsItem;
 import com.emmaguy.hn.model.data.HackerNewsApiService;
 import com.emmaguy.hn.model.data.comments.OnCommentErrorListener;
 import com.emmaguy.hn.model.data.comments.OnCommentNextListener;
 import com.emmaguy.hn.model.data.newsitems.OnListNewsItemErrorListener;
 import com.emmaguy.hn.model.data.newsitems.OnListNewsItemNextListener;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit.RestAdapter;
@@ -58,12 +57,13 @@ public class HackerNewsDataSource implements NewsDataSource {
 
     @Override
     public void getComments(List<String> ids) {
-        createCommentsObservable(ids)
+        fetchComments(ids)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new OnCommentNextListener(EventBusProvider.getNetworkBusInstance()),
                         new OnCommentErrorListener(EventBusProvider.getNetworkBusInstance()));
     }
+
 
     /**
      * Creates an observable which will fetch user comments made on a particular news item
@@ -74,7 +74,7 @@ public class HackerNewsDataSource implements NewsDataSource {
      * @param ids Comment ids to fetch
      * @return Observable of a flattened list, combining all comments and replies in the tree
      */
-    private Observable<List<Comment>> createCommentsObservable(List<String> ids) {
+    private Observable<List<Comment>> fetchComments(List<String> ids) {
         return Observable.from(ids)
                 .flatMap(new Func1<String, Observable<Comment>>() {
                     @Override
@@ -85,15 +85,12 @@ public class HackerNewsDataSource implements NewsDataSource {
                 .flatMap(new Func1<Comment, Observable<List<Comment>>>() {
                     @Override
                     public Observable<List<Comment>> call(Comment comment) {
-                        List<Comment> value = new ArrayList<>();
-                        value.add(comment);
-
-                        Observable<List<Comment>> o = Observable.just(value);
+                        Observable<List<Comment>> o = Observable.just(Collections.singletonList(comment));
                         if (comment.getChildCommentIds().isEmpty()) {
                             return o;
                         }
 
-                        return createCommentsObservable(comment.getChildCommentIds()).concatWith(o);
+                        return fetchComments(comment.getChildCommentIds()).concatWith(o);
                     }
                 })
                 .lift(Utils.<Comment>flattenList())

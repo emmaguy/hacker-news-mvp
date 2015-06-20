@@ -1,5 +1,6 @@
 package com.emmaguy.hn.newsitems;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +33,7 @@ public class NewsItemsActivity extends AppCompatActivity implements NewsItemsVie
     @InjectView(R.id.news_items_textview_title) TextView mTitle;
     @InjectView(R.id.news_items_textview_error) TextView mErrorTextView;
     @InjectView(R.id.news_items_recyclerview_list) RecyclerView mNewsItemsList;
-    @InjectView(R.id.news_items_progress_bar_loading) ProgressBar mProgressBar;
+    @InjectView(R.id.news_items_progress_bar_loading) ProgressBar mLoadingIndicator;
 
     private final RelativeTimeFormatter mRelativeTimeFormatter = new RelativeTimeFormatter();
 
@@ -56,6 +57,7 @@ public class NewsItemsActivity extends AppCompatActivity implements NewsItemsVie
 
         mDataSource = HackerNewsDataSource.getInstance();
         mPresenter = new NewsItemsPresenter(mDataSource, EventBusProvider.getNetworkBusInstance());
+        mLoadingIndicator.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.main), PorterDuff.Mode.SRC_IN);
     }
 
     private void initialiseList() {
@@ -96,12 +98,12 @@ public class NewsItemsActivity extends AppCompatActivity implements NewsItemsVie
 
     @Override
     public void showLoadingIndicator() {
-        mProgressBar.setVisibility(View.VISIBLE);
+        mLoadingIndicator.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoadingIndicator() {
-        mProgressBar.setVisibility(View.GONE);
+        mLoadingIndicator.setVisibility(View.GONE);
     }
 
     @Override

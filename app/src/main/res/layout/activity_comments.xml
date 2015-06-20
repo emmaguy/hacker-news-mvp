@@ -2,8 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
     android:orientation="vertical"
+    android:background="@color/background"
+    tools:ignore="Overdraw"
     tools:context="com.emmaguy.hn.comments.CommentsActivity">
 
     <android.support.v7.widget.Toolbar
@@ -32,9 +33,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/main"
-            android:indeterminateTintMode="src_in" />
+            android:indeterminate="true" />
 
         <TextView
             android:id="@+id/comments_textview_message"

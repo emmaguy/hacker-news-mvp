@@ -1,5 +1,6 @@
 package com.emmaguy.hn.comments;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -73,6 +74,7 @@ public class CommentsActivity extends AppCompatActivity implements CommentsView 
 
         mDataSource = HackerNewsDataSource.getInstance();
         mPresenter = new CommentsPresenter(ids, mDataSource, EventBusProvider.getNetworkBusInstance());
+        mLoadingIndicator.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.main), PorterDuff.Mode.SRC_IN);
     }
 
     @Override
