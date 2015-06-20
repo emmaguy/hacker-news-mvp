@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * News data source based on static dummy data.
+ * News data source based on static dummy data
  */
 public class StaticDataSource implements NewsDataSource {
     public static final int DEFAULT_NUMBER_NEWS_ITEMS = 35;

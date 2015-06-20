@@ -3,9 +3,12 @@
     android:layout_height="match_parent"
     android:background="@color/background_main">
 
-    <include
-        layout="@layout/toolbar"
-        android:id="@+id/news_items_toolbar" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/news_items_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/news_items_recyclerview_list"

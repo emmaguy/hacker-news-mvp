@@ -28,6 +28,7 @@
     </LinearLayout>
 
     <com.balysv.materialripple.MaterialRippleLayout
+        android:id="@+id/row_news_item_viewgroup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_toLeftOf="@id/row_news_item_view_group_comments"
@@ -35,7 +36,6 @@
         app:mrl_rippleColor="@color/main_secondary">
 
         <LinearLayout
-            android:id="@+id/row_news_item_viewgroup"
             android:gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

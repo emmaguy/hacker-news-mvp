@@ -1,7 +1,7 @@
 package com.emmaguy.hn.newsitemdetail;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,20 +13,22 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.emmaguy.hn.R;
-import com.emmaguy.hn.Utils;
+import com.emmaguy.hn.common.PlainTextShareIntentBuilder;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
 
-public class NewsItemDetailActivity extends ActionBarActivity {
+public class NewsItemDetailActivity extends AppCompatActivity {
     public static final String EXTRA_NEWS_ITEM_KEY_URL = "key_news_item_url";
     public static final String EXTRA_NEWS_ITEM_KEY_TITLE = "key_news_item_title";
 
-    @InjectView(R.id.toolbar) Toolbar mToolbar;
+    @InjectView(R.id.news_item_detail_toolbar) Toolbar mToolbar;
     @InjectView(R.id.news_item_detail_web_view_content) WebView mWebView;
     @InjectView(R.id.news_item_detail_progress_bar_loading) ProgressBar mProgressBar;
+
+    private final PlainTextShareIntentBuilder mIntentBuilder = new PlainTextShareIntentBuilder();
 
     private String mTitle;
 
@@ -66,7 +68,7 @@ public class NewsItemDetailActivity extends ActionBarActivity {
         });
     }
 
-    @OnClick(R.id.toolbar)
+    @OnClick(R.id.news_item_detail_toolbar)
     void viewFullTitle() {
         Toast.makeText(this, mTitle, Toast.LENGTH_SHORT).show();
     }
@@ -84,7 +86,7 @@ public class NewsItemDetailActivity extends ActionBarActivity {
             case R.id.share:
                 String url = mWebView.getUrl();
                 Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
-                startActivity(Utils.getShareIntent(url));
+                startActivity(mIntentBuilder.build(url));
                 return true;
         }
         return super.onOptionsItemSelected(item);

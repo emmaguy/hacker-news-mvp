@@ -20,7 +20,7 @@ public class CommentsPresenter {
 
     private CommentsView mView;
 
-    public CommentsPresenter(ArrayList<String> ids, NewsDataSource dataSource, Bus bus) {
+    public CommentsPresenter(@NonNull ArrayList<String> ids, NewsDataSource dataSource, Bus bus) {
         mIds = ids;
         mNetworkBus = bus;
         mDataSource = dataSource;
@@ -31,9 +31,11 @@ public class CommentsPresenter {
 
         mNetworkBus.register(this);
 
-        if (mView.isEmpty()) {
+        if (mView.isEmpty() && !mIds.isEmpty()) {
             mView.showLoadingIndicator();
             mDataSource.getComments(mIds);
+        } else {
+            mView.showNoCommentsMessage();
         }
     }
 

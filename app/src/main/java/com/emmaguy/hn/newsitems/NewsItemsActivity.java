@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.emmaguy.hn.R;
 import com.emmaguy.hn.common.DividerItemDecoration;
 import com.emmaguy.hn.common.EventBusProvider;
+import com.emmaguy.hn.common.RelativeTimeFormatter;
 import com.emmaguy.hn.model.NewsItem;
 import com.emmaguy.hn.model.data.datasource.HackerNewsDataSource;
 import com.emmaguy.hn.model.data.datasource.NewsDataSource;
@@ -32,9 +33,11 @@ public class NewsItemsActivity extends AppCompatActivity implements NewsItemsVie
     @InjectView(R.id.news_items_recyclerview_list) RecyclerView mNewsItemsList;
     @InjectView(R.id.news_items_progress_bar_loading) ProgressBar mProgressBar;
 
-    private NewsDataSource mDataSource;
-    private NewsItemsAdapter mAdapter;
+    private final RelativeTimeFormatter mRelativeTimeFormatter = new RelativeTimeFormatter();
+
     private NewsItemsPresenter mPresenter;
+    private NewsItemsAdapter mAdapter;
+    private NewsDataSource mDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ public class NewsItemsActivity extends AppCompatActivity implements NewsItemsVie
         setSupportActionBar(mToolbar);
 
         initialiseList();
-        mAdapter = new NewsItemsAdapter(this);
+        mAdapter = new NewsItemsAdapter(this, mRelativeTimeFormatter);
         mNewsItemsList.setAdapter(mAdapter);
 
         mDataSource = HackerNewsDataSource.getInstance();

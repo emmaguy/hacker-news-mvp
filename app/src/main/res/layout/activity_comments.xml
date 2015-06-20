@@ -1,21 +1,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_news_item_comments_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
     tools:context="com.emmaguy.hn.comments.CommentsActivity">
 
-    <include layout="@layout/toolbar" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/comments_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize" />
 
-    <ProgressBar
-        android:id="@+id/comments_progress_bar_loading"
-        android:layout_width="48dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        android:indeterminateTint="@color/main"
-        android:indeterminateTintMode="src_in" />
+    <FrameLayout
+        android:id="@+id/comments_viewgroup_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <ProgressBar
+            android:id="@+id/comments_progress_bar_loading"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/main"
+            android:indeterminateTintMode="src_in" />
+
+        <TextView
+            android:id="@+id/comments_textview_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/main"
+            android:visibility="gone"
+            tools:text="Sad face :-("
+            tools:visibility="visible" />
+
+    </FrameLayout>
 </LinearLayout>

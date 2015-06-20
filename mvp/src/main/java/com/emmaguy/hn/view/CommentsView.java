@@ -11,6 +11,8 @@ public interface CommentsView {
     void showLoadingIndicator();
     void hideLoadingIndicator();
 
+    void hideNoCommentsMessage();
+    void showNoCommentsMessage();
     void showComments(List<Comment> comments);
 
     boolean isEmpty();
