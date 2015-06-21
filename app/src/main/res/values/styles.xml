@@ -6,6 +6,8 @@
 
         <item name="android:windowActionBar">false</item>
         <item name="windowActionBar">false</item>
+
+        <item name="colorControlHighlight">@color/main</item>
     </style>
 
     <style name="TreeNodeStyleDivided">

@@ -1,87 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="60dp">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/row_news_item_viewgroup"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/news_item_padding"
+        android:paddingLeft="@dimen/news_item_padding"
+        android:paddingRight="@dimen/news_item_padding"
+        android:paddingStart="@dimen/news_item_padding">
+
+        <TextView
+            android:id="@+id/row_news_item_textview_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/text_main"
+            android:textSize="15sp"
+            tools:text="awesome story title blah blah" />
+
+        <TextView
+            android:id="@+id/row_news_item_textview_url"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:background="@drawable/selector_news_item_background"
+            android:maxLines="1"
+            android:paddingBottom="1dp"
+            android:paddingTop="1dp"
+            android:singleLine="true"
+            android:textColorLink="@color/selector_news_item_web_link"
+            android:textSize="13sp"
+            tools:text="www.emmaisawesome.com" />
+
+        <TextView
+            android:id="@+id/row_news_item_textview_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            tools:text="123 points" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/row_news_item_view_group_comments"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right|end"
         android:background="@color/background_news_item_contrast">
 
-        <com.balysv.materialripple.MaterialRippleLayout
+        <ImageView
+            android:id="@+id/row_news_item_textview_comments"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:mrl_rippleAlpha="0.2"
-            app:mrl_rippleColor="@color/main_secondary">
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/comment"
+            android:src="@drawable/ic_comments" />
 
-            <ImageView
-                android:id="@+id/row_news_item_textview_comments"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/comment"
-                android:src="@drawable/ic_comments" />
-
-        </com.balysv.materialripple.MaterialRippleLayout>
     </LinearLayout>
 
-    <com.balysv.materialripple.MaterialRippleLayout
-        android:id="@+id/row_news_item_viewgroup"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_toLeftOf="@id/row_news_item_view_group_comments"
-        android:layout_toStartOf="@id/row_news_item_view_group_comments"
-        app:mrl_rippleAlpha="0.2"
-        app:mrl_rippleColor="@color/main_secondary">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="@dimen/news_item_padding"
-            android:layout_marginLeft="@dimen/news_item_padding"
-            android:layout_marginRight="@dimen/news_item_padding"
-            android:layout_marginStart="@dimen/news_item_padding"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/row_news_item_textview_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="@color/text_main"
-                android:textSize="15sp"
-                tools:text="awesome story title blah blah" />
-
-            <TextView
-                android:id="@+id/row_news_item_textview_url"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autoLink="web"
-                android:background="@drawable/selector_news_item_background"
-                android:maxLines="1"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp"
-                android:singleLine="true"
-                android:textColorLink="@color/selector_news_item_web_link"
-                android:textSize="13sp"
-                tools:text="www.emmaisawesome.com" />
-
-            <TextView
-                android:id="@+id/row_news_item_textview_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_secondary"
-                android:textSize="12sp"
-                tools:text="123 points" />
-
-        </LinearLayout>
-    </com.balysv.materialripple.MaterialRippleLayout>
-
-</RelativeLayout>
+</LinearLayout>

@@ -36,7 +36,4 @@ dependencies {
 
     // treeview for comments
     compile 'com.github.bmelnychuk:atv:1.2.4'
-
-    // material ripple for touch feedback
-    compile 'com.balysv:material-ripple:1.0.1'
 }
