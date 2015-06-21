@@ -1,8 +1,8 @@
 package com.emmaguy.hn.model.data.newsitems;
 
+import com.emmaguy.hn.common.RxBus;
 import com.emmaguy.hn.model.NewsItem;
 import com.emmaguy.hn.model.data.events.NewsItemEvents;
-import com.squareup.otto.Bus;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,8 +19,7 @@ import static org.mockito.Mockito.verify;
  * Created by emma on 21/03/15.
  */
 public class OnListNewsItemNextListenerTest {
-    @Mock
-    private Bus mMockNetworkBus;
+    @Mock private RxBus mMockNetworkBus;
 
     private OnListNewsItemNextListener mNextListener;
 
@@ -32,12 +31,12 @@ public class OnListNewsItemNextListenerTest {
     }
 
     @Test
-    public void test_getLatestNewsItems_postsNewsItemsOnEventBus() {
+    public void getLatestNewsItems_postsNewsItemsOnEventBus() {
         ArrayList<NewsItem> newsItems = new ArrayList<>();
         newsItems.add(new NewsItem());
 
         mNextListener.call(newsItems);
 
-        verify(mMockNetworkBus, times(1)).post(any(NewsItemEvents.RequestSucceededEvent.class));
+        verify(mMockNetworkBus, times(1)).send(any(NewsItemEvents.RequestSucceededEvent.class));
     }
 }

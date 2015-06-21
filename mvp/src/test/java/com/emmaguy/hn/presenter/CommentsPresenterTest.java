@@ -1,10 +1,10 @@
 package com.emmaguy.hn.presenter;
 
+import com.emmaguy.hn.common.RxBus;
 import com.emmaguy.hn.model.Comment;
 import com.emmaguy.hn.model.data.datasource.NewsDataSource;
 import com.emmaguy.hn.model.data.events.CommentEvents;
 import com.emmaguy.hn.view.CommentsView;
-import com.squareup.otto.Bus;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,10 +12,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
 
-import static org.mockito.Mockito.mock;
+import rx.Observable;
+
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -25,14 +25,9 @@ import static org.mockito.Mockito.when;
  * Created by emma on 21/03/15.
  */
 public class CommentsPresenterTest {
-    @Mock
-    private Bus mMockNetworkBus;
-
-    @Mock
-    private CommentsView mMockView;
-
-    @Mock
-    private NewsDataSource mMockDataSource;
+    @Mock private RxBus mMockNetworkBus;
+    @Mock private CommentsView mMockView;
+    @Mock private NewsDataSource mMockDataSource;
 
     private CommentsPresenter mPresenter;
 
@@ -45,26 +40,19 @@ public class CommentsPresenterTest {
         mIds.add("1");
 
         mPresenter = new CommentsPresenter(mIds, mMockDataSource, mMockNetworkBus);
+        when(mMockNetworkBus.toObservable()).thenReturn(Observable.just(new Object()));
     }
 
     @Test
-    public void test_onStart_registersNetworkBus() {
+    public void onStart_registersNetworkBus() {
         mPresenter.onStart(mMockView);
 
-        verify(mMockNetworkBus, times(1)).register(mPresenter);
+        verify(mMockNetworkBus, times(1)).toObservable();
         verifyNoMoreInteractions(mMockNetworkBus);
     }
 
     @Test
-    public void test_onStop_unregistersNetworkBus() {
-        mPresenter.onStop();
-
-        verify(mMockNetworkBus, times(1)).unregister(mPresenter);
-        verifyNoMoreInteractions(mMockNetworkBus);
-    }
-
-    @Test
-    public void test_onStartWithEmptyView_showsLoadingIndicator() {
+    public void onStartWithEmptyView_showsLoadingIndicator() {
         when(mMockView.isEmpty()).thenReturn(true);
 
         mPresenter.onStart(mMockView);
@@ -73,17 +61,17 @@ public class CommentsPresenterTest {
     }
 
     @Test
-    public void test_onStartWithEmptyView_retrievesComments() {
+    public void onStartWithEmptyView_retrievesComments() {
         when(mMockView.isEmpty()).thenReturn(true);
 
         mPresenter.onStart(mMockView);
 
-        verify(mMockDataSource, times(1)).getComments(mIds);
+        verify(mMockDataSource, times(1)).getComments(mIds, mMockNetworkBus);
         verifyNoMoreInteractions(mMockDataSource);
     }
 
     @Test
-    public void test_onStartWithoutEmptyView_doesNotShowLoadingIndicator() {
+    public void onStartWithoutEmptyView_doesNotShowLoadingIndicator() {
         when(mMockView.isEmpty()).thenReturn(false);
 
         mPresenter.onStart(mMockView);
@@ -92,34 +80,47 @@ public class CommentsPresenterTest {
     }
 
     @Test
-    public void test_onStartWithoutEmptyView_doesNotRetrievesComments() {
+    public void onStartWithoutEmptyView_doesNotRetrievesComments() {
         when(mMockView.isEmpty()).thenReturn(false);
 
         mPresenter.onStart(mMockView);
 
-        verify(mMockDataSource, times(0)).getComments(mIds);
+        verify(mMockDataSource, times(0)).getComments(mIds, mMockNetworkBus);
     }
 
     @Test
-    public void test_onCommentsReceived_hidesLoadingIndicator() {
+    public void onCommentsReceived_hidesLoadingIndicator() {
         mPresenter.onStart(mMockView);
-        mPresenter.onCommentsReceived(new CommentEvents.RequestSucceededEvent(new ArrayList<Comment>()));
+        Object value = new CommentEvents.RequestSucceededEvent(Collections.singletonList(new Comment("blah")));
+        when(mMockNetworkBus.toObservable()).thenReturn(Observable.just(value));
 
         verify(mMockView, times(1)).hideLoadingIndicator();
     }
 
     @Test
-    public void test_onCommentsReceived_showsComments() {
+    public void onCommentsReceived_showsComments() {
         ArrayList<Comment> comments = new ArrayList<>();
 
         mPresenter.onStart(mMockView);
-        mPresenter.onCommentsReceived(new CommentEvents.RequestSucceededEvent(comments));
+        Object value = new CommentEvents.RequestSucceededEvent(Collections.singletonList(new Comment("blah")));
+        when(mMockNetworkBus.toObservable()).thenReturn(Observable.just(value));
 
         verify(mMockView, times(1)).showComments(comments);
     }
 
     @Test
-    public void test_presenterWithEmptyViewAndWithEmptyIds_showsNoCommentsMessageAndDoesNotTryToRetrieveCommentsAndDoesNotShowLoadingIndicator() {
+    public void onCommentsReceivedWithNoComments_showsNoCommentsMessage() {
+        ArrayList<Comment> comments = new ArrayList<>();
+
+        mPresenter.onStart(mMockView);
+        Object value = new CommentEvents.RequestSucceededEvent(comments);
+        when(mMockNetworkBus.toObservable()).thenReturn(Observable.just(value));
+
+        verify(mMockView, times(1)).showNoCommentsMessage();
+    }
+
+    @Test
+    public void presenterWithEmptyViewAndWithEmptyIds_showsNoCommentsMessageAndDoesNotTryToRetrieveCommentsAndDoesNotShowLoadingIndicator() {
         when(mMockView.isEmpty()).thenReturn(true);
         ArrayList<String> ids = new ArrayList<>();
 
@@ -127,8 +128,7 @@ public class CommentsPresenterTest {
 
         p.onStart(mMockView);
 
-        verify(mMockDataSource, times(0)).getComments(ids);
-        verify(mMockView, times(0)).showLoadingIndicator();
+        verify(mMockDataSource, times(0)).getComments(ids, mMockNetworkBus);
         verify(mMockView, times(1)).showNoCommentsMessage();
     }
 }

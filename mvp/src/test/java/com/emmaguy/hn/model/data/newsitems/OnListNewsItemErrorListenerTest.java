@@ -1,7 +1,7 @@
 package com.emmaguy.hn.model.data.newsitems;
 
+import com.emmaguy.hn.common.RxBus;
 import com.emmaguy.hn.model.data.events.NewsItemEvents;
-import com.squareup.otto.Bus;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  */
 public class OnListNewsItemErrorListenerTest {
     @Mock
-    private Bus mMockNetworkBus;
+    private RxBus mMockNetworkBus;
 
     private OnListNewsItemErrorListener mErrorListener;
 
@@ -30,10 +30,10 @@ public class OnListNewsItemErrorListenerTest {
     }
 
     @Test
-    public void test_errorListener_postsRequestFailedOnEventBus() {
+    public void errorListener_postsRequestFailedOnEventBus() {
         mErrorListener.call(new Throwable("blah"));
 
-        verify(mMockNetworkBus, times(1)).post(any(NewsItemEvents.RequestFailedEvent.class));
+        verify(mMockNetworkBus, times(1)).send(any(NewsItemEvents.RequestFailedEvent.class));
         verifyNoMoreInteractions(mMockNetworkBus);
     }
 }

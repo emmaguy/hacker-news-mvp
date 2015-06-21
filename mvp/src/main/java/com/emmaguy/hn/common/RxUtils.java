@@ -8,7 +8,7 @@ import rx.Subscriber;
 /**
  * Created by emma on 29/03/15.
  */
-public class Utils {
+public class RxUtils {
     public static <T> Observable.Operator<T, List<T>> flattenList() {
         return new Observable.Operator<T, List<T>>() {
             @Override

@@ -15,8 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.emmaguy.hn.R;
-import com.emmaguy.hn.common.EventBusProvider;
 import com.emmaguy.hn.common.PlainTextShareIntentBuilder;
+import com.emmaguy.hn.common.RxBus;
 import com.emmaguy.hn.model.Comment;
 import com.emmaguy.hn.model.data.datasource.HackerNewsDataSource;
 import com.emmaguy.hn.model.data.datasource.NewsDataSource;
@@ -73,7 +73,7 @@ public class CommentsActivity extends AppCompatActivity implements CommentsView 
         ArrayList<String> ids = getIntent().getStringArrayListExtra(EXTRA_NEWS_ITEM_COMMENT_KEYS_ID);
 
         mDataSource = HackerNewsDataSource.getInstance();
-        mPresenter = new CommentsPresenter(ids, mDataSource, EventBusProvider.getNetworkBusInstance());
+        mPresenter = new CommentsPresenter(ids, mDataSource, new RxBus());
         mLoadingIndicator.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.main), PorterDuff.Mode.SRC_IN);
     }
 

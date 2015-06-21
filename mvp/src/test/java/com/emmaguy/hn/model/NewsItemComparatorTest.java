@@ -13,7 +13,7 @@ import static org.junit.Assert.assertThat;
 public class NewsItemComparatorTest {
 
     @Test
-    public void test_item1WithScoreLowerThanItem2_returns1() {
+    public void item1WithScoreLowerThanItem2_returns1() {
         NewsItemComparator comparator = new NewsItemComparator();
 
         NewsItem item1 = new NewsItem();
@@ -26,7 +26,7 @@ public class NewsItemComparatorTest {
     }
 
     @Test
-    public void test_item2WithScoreLowerThanItem1_returnsNegative1() {
+    public void item2WithScoreLowerThanItem1_returnsNegative1() {
         NewsItemComparator comparator = new NewsItemComparator();
 
         NewsItem item1 = new NewsItem();
@@ -39,7 +39,7 @@ public class NewsItemComparatorTest {
     }
 
     @Test
-    public void test_item1WithScoreEqualToThanItem2AndNoComments_returns0() {
+    public void item1WithScoreEqualToThanItem2AndNoComments_returns0() {
         NewsItemComparator comparator = new NewsItemComparator();
 
         NewsItem item1 = new NewsItem();
@@ -52,7 +52,7 @@ public class NewsItemComparatorTest {
     }
 
     @Test
-    public void test_itemsWithEqualScoresButItem2WithMoreComments_returns1() {
+    public void itemsWithEqualScoresButItem2WithMoreComments_returns1() {
         ArrayList<String> ids = new ArrayList<>();
         ids.add("blah");
 
@@ -69,7 +69,7 @@ public class NewsItemComparatorTest {
     }
 
     @Test
-    public void test_itemsWithEqualScoresButItem1WithMoreComments_returnsNegative1() {
+    public void itemsWithEqualScoresButItem1WithMoreComments_returnsNegative1() {
         ArrayList<String> ids = new ArrayList<>();
         ids.add("blah");
 

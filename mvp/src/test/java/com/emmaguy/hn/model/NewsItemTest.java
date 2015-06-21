@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThat;
 public class NewsItemTest {
 
     @Test
-    public void test_newsItemDeserialisation() {
+    public void newsItemDeserialisation() {
         NewsItem item = new Gson().fromJson(getNewsItemJson(), NewsItem.class);
 
         assertThat(item.getId(), equalTo("1234"));
@@ -41,7 +41,7 @@ public class NewsItemTest {
     }
 
     @Test
-    public void test_settingPermalink_appendsId() {
+    public void settingPermalink_appendsId() {
         NewsItem item = new NewsItem("123");
         item.setPermalink("http://www.emmaisawesome.com/item?id=");
 

@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.emmaguy.hn.R;
 import com.emmaguy.hn.common.DividerItemDecoration;
-import com.emmaguy.hn.common.EventBusProvider;
 import com.emmaguy.hn.common.RelativeTimeFormatter;
+import com.emmaguy.hn.common.RxBus;
 import com.emmaguy.hn.model.NewsItem;
 import com.emmaguy.hn.model.data.datasource.HackerNewsDataSource;
 import com.emmaguy.hn.model.data.datasource.NewsDataSource;
@@ -56,7 +56,7 @@ public class NewsItemsActivity extends AppCompatActivity implements NewsItemsVie
         mNewsItemsList.setAdapter(mAdapter);
 
         mDataSource = HackerNewsDataSource.getInstance();
-        mPresenter = new NewsItemsPresenter(mDataSource, EventBusProvider.getNetworkBusInstance());
+        mPresenter = new NewsItemsPresenter(mDataSource, new RxBus());
         mLoadingIndicator.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.main), PorterDuff.Mode.SRC_IN);
     }
 

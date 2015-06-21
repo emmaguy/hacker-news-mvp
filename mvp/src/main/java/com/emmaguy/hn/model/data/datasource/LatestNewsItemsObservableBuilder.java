@@ -1,6 +1,6 @@
 package com.emmaguy.hn.model.data.datasource;
 
-import com.emmaguy.hn.common.Utils;
+import com.emmaguy.hn.common.RxUtils;
 import com.emmaguy.hn.model.NewsItem;
 import com.emmaguy.hn.model.data.HackerNewsApiService;
 
@@ -32,7 +32,7 @@ public class LatestNewsItemsObservableBuilder {
 
     public Observable<List<NewsItem>> build() {
         return mApiService.topStories()
-                .lift(Utils.<String>flattenList())
+                .lift(RxUtils.<String>flattenList())
                 .limit(mMaxStories)
                 .concatMap(new Func1<String, Observable<NewsItem>>() {
                     @Override

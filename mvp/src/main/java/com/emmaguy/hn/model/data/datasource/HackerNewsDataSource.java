@@ -1,7 +1,7 @@
 package com.emmaguy.hn.model.data.datasource;
 
-import com.emmaguy.hn.common.EventBusProvider;
-import com.emmaguy.hn.common.Utils;
+import com.emmaguy.hn.common.RxBus;
+import com.emmaguy.hn.common.RxUtils;
 import com.emmaguy.hn.model.Comment;
 import com.emmaguy.hn.model.data.HackerNewsApiService;
 import com.emmaguy.hn.model.data.comments.OnCommentErrorListener;
@@ -47,21 +47,21 @@ public class HackerNewsDataSource implements NewsDataSource {
     }
 
     @Override
-    public void getLatestNewsItems() {
+    public void getLatestNewsItems(RxBus bus) {
         new LatestNewsItemsObservableBuilder(MAX_NUMBER_STORIES, mHackerNewsApiService).build()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new OnListNewsItemNextListener(EventBusProvider.getNetworkBusInstance()),
-                        new OnListNewsItemErrorListener(EventBusProvider.getNetworkBusInstance()));
+                .subscribe(new OnListNewsItemNextListener(bus),
+                        new OnListNewsItemErrorListener(bus));
     }
 
     @Override
-    public void getComments(List<String> ids) {
+    public void getComments(List<String> ids, RxBus bus) {
         fetchComments(ids)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new OnCommentNextListener(EventBusProvider.getNetworkBusInstance()),
-                        new OnCommentErrorListener(EventBusProvider.getNetworkBusInstance()));
+                .subscribe(new OnCommentNextListener(bus),
+                        new OnCommentErrorListener(bus));
     }
 
 
@@ -93,7 +93,7 @@ public class HackerNewsDataSource implements NewsDataSource {
                         return fetchComments(comment.getChildCommentIds()).concatWith(o);
                     }
                 })
-                .lift(Utils.<Comment>flattenList())
+                .lift(RxUtils.<Comment>flattenList())
                 .filter(new Func1<Comment, Boolean>() {
                     @Override
                     public Boolean call(Comment comment) {

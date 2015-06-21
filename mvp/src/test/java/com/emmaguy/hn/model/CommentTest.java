@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThat;
 public class CommentTest {
 
     @Test
-    public void test_commentDeserialisation() {
+    public void commentDeserialisation() {
         Comment item = new Gson().fromJson(getCommentJson(), Comment.class);
 
         assertThat(item.getId(), equalTo("8952"));

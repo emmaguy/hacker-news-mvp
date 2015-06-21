@@ -46,7 +46,7 @@ public class LatestNewsItemsObservableBuilderTest {
     }
 
     @Test
-    public void test_builtObservable_limitsToFirst5NewsItems() throws Exception {
+    public void builtObservable_limitsToFirst5NewsItems() throws Exception {
         final NewsItem item1 = new NewsItem("1");
         final NewsItem item2 = new NewsItem("2");
         final NewsItem item3 = new NewsItem("3");
